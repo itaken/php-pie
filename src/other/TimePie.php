@@ -11,6 +11,16 @@ namespace ItakenPHPie\other;
 final class TimePie
 {
     /**
+     * 输出 GMT时间格式
+     *
+     * @return string
+     */
+    public static function getGMTtime($time)
+    {
+        return gmdate('l d F Y H:i:s', time() + 60) . ' GMT';
+    }
+
+    /**
      * 判断是否周末
      *
      * @param string $time 日期/时间戳

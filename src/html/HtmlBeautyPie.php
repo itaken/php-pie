@@ -73,12 +73,29 @@ final class HtmlBeautyPie
      * @param string $html
      * @return html
      */
-    public static function htmlClean($html)
+    public static function cleanScript(string $html)
     {
         if (empty($html) || !is_string($html)) {
             return $html;
         }
         $html = preg_replace('/<script.*<\/script>/isU', '', $html);
         return $html;
+    }
+
+    /**
+     * 压缩html : 清除换行符,清除制表符,去掉注释标记
+     * 
+     * @param string $html
+     * @return string 压缩后的内容
+     */
+    public static function compressHtml(string $html)
+    {
+        if (empty($html) || !is_string($html)) {
+            return $html;
+        }
+        $html = str_replace(array("\r\n", "\n", "\t"), '', $html); //清除换行符 / 制表符
+        $pattern = array("/> *([^ ]*) */", "/[\s]+/", "//", "/\" /", "/ \"/", "'/\*[^*]*\*/'");
+        $replace = array(">\\1<", " ", "", "\"", "\"", "");
+        return preg_replace($pattern, $replace, $html);
     }
 }

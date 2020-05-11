@@ -2,6 +2,10 @@
 
 namespace ItakenPHPie\encrypt;
 
+include('lib/IntConvert.class.php');
+
+use ItakenPHPie\encrypt\lib\IntConvert;
+
 /**
  * 一些 加密工具
  *
@@ -47,7 +51,7 @@ final class EncryptPie
      */
     public static function discuzAuthCode($string, $operation='ENCODE', $key='')
     {
-        if(empty($string) || empty($operation)){
+        if (empty($string) || empty($operation)) {
             return false;
         }
         $operation = strtoupper($operation);  // 转为大写
@@ -92,9 +96,9 @@ final class EncryptPie
      * @param int $password 加密密码
      * @return string 加密后的字符串
      */
-    public static function strEncrypt($txtStream, $password='') 
+    public static function strEncrypt($txtStream, $password='')
     {
-        if(empty($txtStream)){
+        if (empty($txtStream)) {
             return false;
         }
         $password = $password ?: md5(self::$itakenKey);
@@ -125,9 +129,9 @@ final class EncryptPie
      * @param int $password 解密密码
      * @return string 解密后的字符串
      */
-    public static function strDecrypt($txtStream, $password='') 
+    public static function strDecrypt($txtStream, $password='')
     {
-        if(empty($txtStream)){
+        if (empty($txtStream)) {
             return false;
         }
         $password = $password ?: md5(self::$itakenKey);
@@ -161,7 +165,7 @@ final class EncryptPie
 
     /**
      * 加密方法 ( XOR 方法)
-     * 
+     *
      * @param string $string 要加密的字符串
      * @param string $key  加密密钥
      * @return string
@@ -178,12 +182,12 @@ final class EncryptPie
             }
         }
         return rtrim(strtr(base64_encode($string), '+/', '-_'), '=');
-    //	return base64_encode($string);
+        //	return base64_encode($string);
     }
 
     /**
      * 解密方法 ( XOR 方法)
-     * 
+     *
      * @param  string $string 要解密的字符串 （必须是 xor_encrypt 方法加密的字符串）
      * @param  string $key  加密密钥
      * @return string
@@ -191,7 +195,7 @@ final class EncryptPie
     public static function xorDecrypt($string, $key = '')
     {
         $string = base64_decode(str_pad(strtr($string, '-_', '+/'), strlen($string) % 4, '=', STR_PAD_RIGHT));
-    //	$string = base64_decode(trim($string));
+        //	$string = base64_decode(trim($string));
         if (empty($string)) {
             return false;
         }
@@ -206,4 +210,25 @@ final class EncryptPie
         return base64_decode($string);
     }
 
+    /**
+     * 将数字编码为字符串
+     *
+     * @param int $num
+     * @return string
+     */
+    public static function int2string($num = 0)
+    {
+        return IntConvert::toString($num);
+    }
+
+    /**
+     * 将字符串编码为数字
+     *
+     * @param string $str
+     * @return int
+     */
+    public static function string2int($str = '')
+    {
+        return IntConvert::toInt($str);
+    }
 }

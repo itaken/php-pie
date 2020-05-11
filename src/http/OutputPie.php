@@ -5,7 +5,7 @@ namespace ItakenPHPie\http;
 /**
  * 输出
  *
- * @modify itaken<regelhh@gmail.com>
+ * @author itaken<regelhh@gmail.com>
  * @since 2014-6-10
  */
 final class OutputPie
@@ -13,7 +13,7 @@ final class OutputPie
 
     /**
      * 是否 GET 提交
-     * 
+     *
      * @return boolean - true 是
      */
     public static function isGet()
@@ -23,7 +23,7 @@ final class OutputPie
 
     /**
      * 是否 POST 提交
-     * 
+     *
      * @return boolean - true 是
      */
     public static function isPost()
@@ -45,14 +45,38 @@ final class OutputPie
             'data' => $data,
             'message' => $message,
             'code' => $status
-		];
+        ];
         header('Content-Type:application/json; charset=utf-8');  // 定义返回格式
         header('Cache-Control:Output no-cache, must-revalidate');
         header('Pragma: no-cache');  // 不缓存
-		header('Expires: 0');
-		echo json_encode($return_arr, JSON_UNESCAPED_UNICODE);
-		// preg_replace('#\":\s*(null|false)#iUs', '":""', );
+        header('Expires: 0');
+        echo json_encode($return_arr, JSON_UNESCAPED_UNICODE);
+        // preg_replace('#\":\s*(null|false)#iUs', '":""', );
         exit();
+    }
+
+    /**
+     * json文件缓存 输出
+     *
+     * @param string $file
+     * @return void
+     */
+    public static function jsonFileOutput($file)
+    {
+        if (!file_exists($file)) {
+            return false;
+        }
+        header('Content-Type:application/json; charset=utf-8');  // 定义返回格式
+        header('Cache-Control: public, must-revalidate');
+        $expires = gmdate('l d F Y H:i:s', time() + 5 * 60) . ' GMT';
+        header('Expires:' . $expires);
+        ob_start();
+        ob_implicit_flush(false);  // 打开/关闭绝对刷送
+        require($file);  // 引入模板
+    //    $cache_data = ob_get_contents();
+        ob_end_flush();
+        //    var_dump($cache_data);
+        exit;
     }
 
     /**
@@ -63,12 +87,12 @@ final class OutputPie
      */
     public static function jsonEcho($json)
     {
-		$json = !is_string($json) ? json_encode($json, JSON_UNESCAPED_UNICODE) : $json;
+        $json = !is_string($json) ? json_encode($json, JSON_UNESCAPED_UNICODE) : $json;
         header('Content-Type:application/json; charset=utf-8');  // 定义返回格式
         header('Cache-Control: no-cache, must-revalidate');
         header('Pragma: no-cache');  // 不缓存
-		header('Expires: 0');
-		echo $json;
+        header('Expires: 0');
+        echo $json;
         exit();
     }
     
@@ -85,6 +109,28 @@ final class OutputPie
         header('Pragma: no-cache');  // 不缓存
         header('Expires: 0');
         exit($js);
+    }
+
+    /**
+     * 推送缓存内容
+     *
+     * @param string $contents 输出内容
+     * @return void
+     */
+    public static function cacheOutput($contents)
+    {
+        header('Content-Type:text/html;charset=utf-8');
+        header('Cache-Control: public, must-revalidate');
+        $expires = gmdate('l d F Y H:i:s', time() + 5 * 60) . ' GMT';
+        header('Expires:' . $expires);
+        $Etag = md5($contents);  // 设定 Etag key
+        if (array_key_exists('HTTP_IF_NONE_MATCH', $_SERVER) && filter_input(INPUT_SERVER, 'HTTP_IF_NONE_MATCH') == $Etag) {
+            header('HTTP/1.1 304 Not Modified');
+        } else {
+            header('Etag:' . $Etag);
+            echo $contents;
+        }
+        exit;
     }
     
     /**
@@ -131,7 +177,7 @@ final class OutputPie
      */
     public static function alertRedirect($url, $msg = '页面即将跳转...')
     {
-		$url = trim($url);
+        $url = trim($url);
         if (empty($url)) {
             $url = '/';
         }
@@ -168,12 +214,12 @@ final class OutputPie
         \http_response_code($statusCode);
         if (ob_get_level() > 1) {
             ob_end_flush();
-		}
+        }
 
-		ob_start();
-		echo $message;
+        ob_start();
+        echo $message;
         $buffer = ob_get_contents();
-		ob_end_clean();
+        ob_end_clean();
 
         return $buffer;
     }

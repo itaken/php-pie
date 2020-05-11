@@ -52,10 +52,13 @@ use ItakenPHPie\charset\CharsetPie;
 use ItakenPHPie\encrypt\EncryptPie;
 use ItakenPHPie\file\FileDetectPie;
 use ItakenPHPie\browser\TerminalPie;
+use ItakenPHPie\encrypt\PasswordPie;
 use ItakenPHPie\file\FileThroughPie;
+use ItakenPHPie\file\XmlPie;
 use ItakenPHPie\html\HtmlConvertPie;
 use ItakenPHPie\filter\WordFilterPie;
-use ItakenPHPie\encrypt\IntConvertPie;
+use ItakenPHPie\html\TagPie;
+use ItakenPHPie\http\ClientPie;
 
 // $res = ConfigPie::get('basic/mimes');
 // $res = WordFilterPie::sensitiveFilter('测试');
@@ -65,8 +68,8 @@ use ItakenPHPie\encrypt\IntConvertPie;
 // $res = PinyinPie::toPinyin('中华人民共和国');
 // echo $str = EncryptPie::strEncrypt('同一个世界,同一个梦想', '奥运');
 // $res = EncryptPie::strDecrypt($str, '奥运');
-// echo $str = IntConvertPie::toString(234523);
-// $res = IntConvertPie::toInt($str);
+// echo $str = EncryptPie::int2string(234523);
+// $res = EncryptPie::string2int($str);
 // $res = FileThroughPie::scanDirList(__DIR__ . '/src');
 // $res = FileThroughPie::openDirList(__DIR__ . '/src');
 // $res = FileThroughPie::recursiveDirList(__DIR__ . '/src');
@@ -106,7 +109,32 @@ HTML;
 // $res = LocationPie::getLbsMap(29.918017, 121.606546);
 // $res = LocationPie::getLbsMap(121.606546, 29.918017);
 // $res = LocationPie::calDistance(121.606546, 29.818017, 121.544802, 29.96298);
-$res = FileCachePie::cache(null);
+// $res = FileCachePie::cache(null);
+// $res = PasswordPie::isWeakPsw(12354);
+// $res = TagPie::json2html('{"l1":{"l1_1":["l1_1_1","l1_1_2"],"l1_2":{"l1_2_1":121}},"l2":{"l2_1":null,"l2_2":true,"l2_3":[]}}');
+// $res = ClientPie::getSoapResult('http://localhost/test.asmx?wsdl', []);
+// $res = ClientPie::getClientInfo();
+// $dataArray = [
+// 	[
+// 		'title' => 'title1',
+// 		'content' => 'content1',
+// 		'pubdate' => '2009-10-11',
+// 	],
+// 	[
+// 		'title' => 'title2',
+// 		'content' => 'content2',
+// 		'pubdate' => '2009-11-11',
+//     ]
+// ];
+// // 属性数组
+// $attributeArray = [
+// 	'title' => [
+// 		'size' => 1
+//     ],
+// ];
+// $res = XmlPie::xmlWriter($dataArray, $attributeArray);
+// $dom = XmlPie::parseDom('<books><book><title>Great American Novel</title></book></books>');
+// $res = $dom->book[0]->title; // Great American Novel
 
 
 p($res);

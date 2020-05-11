@@ -74,4 +74,18 @@ final class SectionPie
         return ['total' => $line, 'list' => $log];
     }
 
+    /**
+     * 计算 两个字符串 的相似度
+     *
+     * @param string $text1
+     * @param string $text2
+     * @return float 相似百分比，示例：82.352941176471
+     */
+    public static function similarText($text1, $text2)
+    {
+        $percent = 0;
+        \similar_text($text1, $text2, $percent);
+        
+        return $percent;
+    }
 }

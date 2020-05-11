@@ -1,6 +1,6 @@
 <?php
 
-namespace ItakenPHPie\encrypt;
+namespace ItakenPHPie\encrypt\lib;
 
 /**
  * 数字字符串互换类，常见的应用场景比如邀请码
@@ -9,7 +9,7 @@ namespace ItakenPHPie\encrypt;
  * 博客：http://www.miaoqiyuan.cn
  * 源码：https://gitee.com/mqycn/IntConvert
  */
-final class IntConvertPie
+final class IntConvert
 {
 
     /**
