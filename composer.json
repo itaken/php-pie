@@ -1,0 +1,49 @@
+{
+    "name" : "itaken/php-pie",
+    "description" : "itaken自用PHP常用代码段",
+    "keywords" : [
+        "itaken", "php", "代码段", "php-pie", "自用"
+    ],
+    "type" : "library",
+    "authors" : [
+		{
+            "name" : "itaken",
+            "email" : "regelhh@gmail.com",
+            "role" : "Maintainer"
+        }
+    ],
+    "require" : {
+        "php" : ">=7.0.8"
+    },
+    "require-dev" : {
+        "symfony/var-dumper" : "^3.4.22",
+        "phpunit/phpunit" : "~6.5",
+        "filp/whoops" : "~2.3"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "ItakenPHPie\\" : "src/"
+        },
+        "classmap" : [
+            "./src/"
+        ]
+    },
+    "autoload-dev" : {
+        "psr-0" : {
+            "" : "tests/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packagist.org"
+        }
+    ],
+    "minimum-stability" : "stable",
+    "support" : {
+        "email" : "regelhh@gmail.com",
+        "issues" : "https://github.com/itaken/php-pie/issues",
+        "source" : "https://github.com/itaken/php-pie.git"
+    },
+    "homepage" : "https://github.com/itaken/php-pie"
+}
