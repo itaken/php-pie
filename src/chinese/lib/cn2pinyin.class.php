@@ -5,7 +5,7 @@ namespace ItakenPHPie\chinese\lib;
 /*
  * By Missde.cn
  */
-class cn2pinyin
+final class cn2pinyin
 {
     private static $zidian=array(
         "A"=>array(59371,41648,50400,33157,41392,18661,47599),

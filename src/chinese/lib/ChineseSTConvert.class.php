@@ -9,7 +9,7 @@ namespace ItakenPHPie\chinese\lib;
  * @modify itaken<regelhh@gmail.com>
  * @since 2020-05-10
  */
-class ChineseSTConvert
+final class ChineseSTConvert
 {
     /**
      * @var array 繁=>简 对应表
