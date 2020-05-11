@@ -66,7 +66,7 @@ final class IpPie
         // 百度地图接口 地址
         $url = 'http://api.map.baidu.com/location/ip?';
         $apiRes = CurlPie::get($url, [
-            'ak' => ConfigPie::loadEnv('BAIDU_AK'),
+            'ak' => ConfigPie::loadEnv('SKD_BAIDU_AK'),
             'ip' => $ip,
             'coor' => 'bd09ll',
         ]);
