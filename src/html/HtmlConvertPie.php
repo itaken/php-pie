@@ -4,7 +4,7 @@ namespace ItakenPHPie\html;
 
 /**
  * Html转换工具
- * 
+ *
  * @author itaken<regelhh@gmail.com>
  * @since 2020-05-10
  */
@@ -194,7 +194,7 @@ final class HtmlConvertPie
     */
     public static function htmlTagsGrab($str)
     {
-        if(empty($str)){
+        if (empty($str)) {
             return $str;
         }
         $matched =[];
@@ -337,4 +337,58 @@ final class HtmlConvertPie
         return $em;
     }
 
+    /**
+     * html 转 ubb 格式
+     *
+     * @param string $html
+     * @return string
+     */
+    public static function toUbb($html)
+    {
+        if (empty($html)) {
+            return false;
+        }
+        $reg = array(
+            '/\<a[^>]+href="mailto:(\S+)"[^>]*\>(.*?)<\/a\>/i', // Email
+            '/\<a[^>]+href=\"([^\"]+)\"[^>]*\>(.*?)<\/a\>/i',
+            '/\<img[^>]+src=\"([^\"]+)\"[^>]*\>/i',
+            '/\<div[^>]+align=\"([^\"]+)\"[^>]*\>(.*?)<\/div\>/i',
+            '/\<([\/]?)u\>/i',
+            '/\<([\/]?)em\>/i',
+            '/\<([\/]?)strong\>/i',
+            '/\<([\/]?)b[^(a|o|>|r)]*\>/i',
+            '/\<([\/]?)i\>/i',
+            '/&amp;/i',
+            '/&lt;/i',
+            '/&gt;/i',
+            '/&nbsp;/i',
+            '/\s+/',
+            '/&#160;/', // 特殊符号
+            '/\<p[^>]*\>/i',
+            '/\<br[^>]*\>/i',
+            '/\<[^>]*?\>/i',
+        );
+        $rpl = array(
+            '[email=$1]$2[/email]',
+            '[url=$1]$2[/url]',
+            '[img]$1[/img]',
+            '[align=$1]$2[/align]',
+            '[$1u]',
+            '[$1I]',
+            '[$1b]',
+            '[$1b]',
+            '[$1i]',
+            '&',
+            '<',
+            '>',
+            ' ',
+            ' ',
+            "\r\n",
+            "\r\n",
+            "\r\n",
+            '',
+        );
+        $str = preg_replace($reg, $rpl, $html);
+        return trim($str);
+    }
 }

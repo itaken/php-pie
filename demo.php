@@ -135,6 +135,7 @@ HTML;
 // $res = XmlPie::xmlWriter($dataArray, $attributeArray);
 // $dom = XmlPie::parseDom('<books><book><title>Great American Novel</title></book></books>');
 // $res = $dom->book[0]->title; // Great American Novel
+$res = ClientPie::getMemoryUsageImplement();
 
 
 p($res);

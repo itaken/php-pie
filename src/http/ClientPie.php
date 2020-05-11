@@ -95,12 +95,31 @@ final class ClientPie
     public static function getClientInfo()
     {
         return [
-            // 输出 内存使用信息
+            // 输出 内存使用信息 http://php.net/memory_get_usage
             'memory_usage' => memory_get_usage() . ' bytes',   // 564160 bytes
             // 输出 内存 峰值
             'memory_peak_usage' => memory_get_peak_usage() . ' bytes',  // 564160 bytes
             // 输出CPU使用情况,win下不可用
             'cup' => getrusage(),
         ];
+    }
+
+    /**
+     * 取得内存使用情况
+     *
+     * @return int
+     */
+    public static function getMemoryUsageImplement()
+    {
+        $pid = getmypid();   // 获取当前PHP进程ID
+        if (stristr(PHP_OS, 'WIN')) {  // 判断是否是win系统
+            $output = array();
+            exec('tasklist /FI "PID eq ' . $pid . '" /FO LIST', $output);
+            return preg_replace('/[^0-9]/', '', $output[5]) * 1024;
+        } else {
+            exec("ps -eo%mem,rss,pid | grep $pid", $output);
+            $output = explode(" ", $output[0]);
+            return $output[1] * 1024;
+        }
     }
 }
