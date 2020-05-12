@@ -20,16 +20,17 @@ final class WordFilterPie
      * @param string $text
      * @param string $replace
      * @param int $depth
+     * @param bool $wordCache 词库缓存
      * @return array
      */
-    public static function sensitiveFilter($text, $replace='*', $depth=2)
+    public static function sensitiveFilter($text, $replace='*', $depth=2, $wordCache=true)
     {
         if (empty($text)) {
             return [];
         }
         $depth = $depth > 3 || $depth < 0 ? 2 : $depth;
         $filter = new SensitiveWordFilter();
-        $filter->loadData();
+        $filter->loadData($wordCache);
         $text = $filter->filter($text, $replace, $depth);
         return [
             'text' => $text,

@@ -16,9 +16,10 @@ error_reporting(E_ALL ^ E_NOTICE);
 // 加载文件
 include('autoload.php');
 
+// 加载类库
 $vdFile = __DIR__ . '/vendor/autoload.php';
-if (file_exists($vFile)) {
-    include($vFile);
+if (file_exists($vdFile)) {
+    include($vdFile);
     // 注册调试类库
     $whoops = new \Whoops\Run;
     $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
@@ -63,7 +64,7 @@ use ItakenPHPie\http\ClientPie;
 // $res = ConfigPie::get('basic/mimes');
 // $res = WordFilterPie::sensitiveFilter('测试');
 // $res = TerminalPie::isWap();
-// $res = CharsetPie::toAlphabet('À|Á|Â|Ã|Ä|Å|Ǻ|Ā|Ă|Ą|Ǎ/A/à|á|â|ã');
+// $res = CharsetPie::toAlphabet('À|Á|Â|Ã|Ä|Å|Ǻ|Ā|Ă|Ą|Ǎ|A|à|á|â|ã');
 // $res = LangPie::toTrad('中华人民共和国');
 // $res = PinyinPie::toPinyin('中华人民共和国');
 // echo $str = EncryptPie::strEncrypt('同一个世界,同一个梦想', '奥运');
@@ -135,7 +136,7 @@ HTML;
 // $res = XmlPie::xmlWriter($dataArray, $attributeArray);
 // $dom = XmlPie::parseDom('<books><book><title>Great American Novel</title></book></books>');
 // $res = $dom->book[0]->title; // Great American Novel
-$res = ClientPie::getMemoryUsageImplement();
+// $res = ClientPie::getMemoryUsageImplement();
 
 
 p($res);

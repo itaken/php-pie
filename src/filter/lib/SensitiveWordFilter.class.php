@@ -68,7 +68,7 @@ class SensitiveWordFilter
             return;
         }
         $cacheKey = __CLASS__ . "_" . md5($this->dictFile);
-        $dict = $this->cache($cacheKey);
+        $dict = $cache ? $this->cache($cacheKey) : null;
         if (empty($dict)) {
             // 从字典中加载
             $this->loadDataFromFile();
