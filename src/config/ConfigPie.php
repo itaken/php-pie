@@ -33,9 +33,6 @@ final class ConfigPie
         $cacheKey = $path . http_build_query($params);
         if (!isset($tConfigMap[$cacheKey])) {
             $path = str_replace(['.conf', '.php', ' '], '', $path);  // 去除空格,'.conf', '.php'
-            if (is_string($name)) {
-                $name = trim($name);  // 清除空格
-            }
             $path = strpos($path, '/') === false ? "basic/{$path}" : $path;
             $file = __DIR__ . "/{$path}.conf.php";
             if (file_exists($file)) {
@@ -51,6 +48,7 @@ final class ConfigPie
         if (is_null($name) || false === $name || '' === $name) {
             return $configList ?: [];
         }
+        $name = trim($name);  // 清除空格
         return $configList[$name] ?: null;
     }
 

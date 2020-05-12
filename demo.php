@@ -76,27 +76,21 @@ use ItakenPHPie\http\ClientPie;
 // $res = FileThroughPie::recursiveDirList(__DIR__ . '/src');
 // $res = FileDetectPie::detectFileRealExt(__DIR__ . '/composer.json');
 $html=<<<HTML
-<div class="trans-operation clearfix">
-    <a href="javascript:void(0);" class="language-btn select-from-language">
-        <span class="select-inner" style="background-color:#666;font-size:22px">
-            <span class="language-selected" data-lang="auto">自动检测</span>
-            <i class="arrow-down"></i>
+<div class="clearfix">
+    <a href="javascript:void(0);" class="select-from">
+        <span style="background-color:#666;font-size:22px">
+            <span data-lang="auto">自动检测</span>
+            <i class="arrow"></i>
         </span>
     </a>
-    <a href="javascript:void(0);" class="language-btn-disable from-to-exchange">
-        <span class="exchange-mask"></span>
+    <a href="javascript:void(0);" class="btn-disable">
+        <span class="exchange">文本</span>
     </a>
-    <a href="javascript:void(0);" class="language-btn select-to-language">
-        <span class="select-inner">
-            <span class="language-selected" data-lang="zh">中文(简体)</span>
-            <i class="arrow arrow-down"></i>
-        </span>
-    </a>
-    <a href="javascript:void(0);" class="trans-btn trans-btn-zh" id="translate-button" target="_self"></a>
-    <a href="javascript:" class="manual-trans-btn"></a>
+    <a href="javascript:void(0);" class="btn-zh" id="button" target="_self">按钮</a>
+    <a href="javascript:">链接</a>
 </div>
 HTML;
-// $res = HtmlConvertPie::ubbEncode($html);
+$res = HtmlConvertPie::ubbEncode($html);
 // $res = OutputPie::jsonEcho(['abc' => 111]);
 // $res = OutputPie::jsonOutput(['abc' => 111]);
 // $res = OutputPie::redirect('https://baidu.com');
