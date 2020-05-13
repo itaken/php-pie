@@ -2,9 +2,9 @@
 
 namespace ItakenPHPie\filter;
 
-include('lib/SensitiveWordFilter.class.php');
+include('lib/sensitive/SensitiveWordFilter.class.php');
 
-use ItakenPHPie\filter\lib\SensitiveWordFilter;
+use ItakenPHPie\filter\lib\sensitive\SensitiveWordFilter;
 
 /**
  * 文本过滤

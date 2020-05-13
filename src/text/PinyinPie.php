@@ -2,9 +2,9 @@
 
 namespace ItakenPHPie\text;
 
-include('lib/cn2pinyin.class.php');
+include('lib/pinyin/cn2pinyin.class.php');
 
-use ItakenPHPie\text\lib\cn2pinyin;
+use ItakenPHPie\text\lib\pinyin\cn2pinyin;
 
 /**
  * 汉字转拼音

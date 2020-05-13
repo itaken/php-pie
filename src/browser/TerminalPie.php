@@ -2,9 +2,9 @@
 
 namespace ItakenPHPie\browser;
 
-include('lib/Mobile_Detect.php');
+include('lib/detect/Mobile_Detect.php');
 
-use ItakenPHPie\browser\lib\Mobile_Detect;
+use ItakenPHPie\browser\lib\detect\Mobile_Detect;
 
 /**
  * 终端 工具类

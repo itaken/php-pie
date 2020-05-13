@@ -1,6 +1,6 @@
 <?php
 
-namespace ItakenPHPie\filter\lib;
+namespace ItakenPHPie\filter\lib\sensitive;
 
 /**
  * Trie树 php 实现敏感词过滤 (DFA-Trie)

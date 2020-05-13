@@ -86,9 +86,9 @@ final class IpPie
     public static function analysisIpInfoByGeo($ip)
     {
         if(!function_exists('\GeoIp2\Database\Reader')){
-            require(__DIR__ . '/lib/geoip2.phar');
+            require(__DIR__ . '/lib/geoip/geoip2.phar');
         }
-        $reader = new \GeoIp2\Database\Reader(__DIR__.'/lib/GeoLite2-City.mmdb');
+        $reader = new \GeoIp2\Database\Reader(__DIR__.'/lib/geoip/GeoLite2-City.mmdb');
         $geoObj = $reader->city($ip)->raw;
         if(empty($geoObj)){
             return [];

@@ -1,6 +1,6 @@
 <?php
 
-namespace ItakenPHPie\browser\lib;
+namespace ItakenPHPie\browser\lib\detect;
 
 /**
  * Mobile Detect Library

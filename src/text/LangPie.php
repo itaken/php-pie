@@ -2,9 +2,9 @@
 
 namespace ItakenPHPie\text;
 
-include('lib/ChineseSTConvert.class.php');
+include('lib/chinese/ChineseSTConvert.class.php');
 
-use ItakenPHPie\text\lib\ChineseSTConvert;
+use ItakenPHPie\text\lib\chinese\ChineseSTConvert;
 
 /**
  * 汉字转拼音
