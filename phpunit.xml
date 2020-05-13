@@ -10,7 +10,7 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="true">
-    <testsuite name="Fuse - Testsuite">
+    <testsuite name="PHPie - Testsuite">
         <directory suffix=".php">./tests</directory>
     </testsuite>
 

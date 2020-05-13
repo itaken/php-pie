@@ -1,10 +1,10 @@
 <?php
 
-namespace ItakenPHPie\filter;
+namespace ItakenPHPie\text;
 
 include('lib/sensitive/SensitiveWordFilter.class.php');
 
-use ItakenPHPie\filter\lib\sensitive\SensitiveWordFilter;
+use ItakenPHPie\text\lib\sensitive\SensitiveWordFilter;
 
 /**
  * 文本过滤
@@ -12,7 +12,7 @@ use ItakenPHPie\filter\lib\sensitive\SensitiveWordFilter;
  * @author itaken<regelhh@gmail.com>
  * @since 2020-05-08
  */
-final class WordFilterPie
+final class FilterPie
 {
     /**
      * 敏感词过滤
@@ -31,9 +31,10 @@ final class WordFilterPie
         $depth = $depth > 3 || $depth < 0 ? 2 : $depth;
         $filter = new SensitiveWordFilter();
         $filter->loadData($wordCache);
-        $text = $filter->filter($text, $replace, $depth);
+        $filterStr = $filter->filter($text, $replace, $depth);
         return [
-            'text' => $text,
+            'original_text' => $text,
+            'text' => $filterStr,
             'match' => $filter->getMatchDict(),
             'full_match' => $filter->getMatchFullDict(),
         ];

@@ -4,6 +4,8 @@
 .project
 .settings
 .vscode
+.git
+.github
 
 _skins_tmp
 
@@ -27,4 +29,8 @@ GTAGS
 /**/*.txt
 /**/*.env
 /**/*.mmdb
+/**/*.bak
+/**/*.data
+/**/*.dat
+
 /**/tmp/

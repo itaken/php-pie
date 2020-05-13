@@ -57,12 +57,12 @@ use ItakenPHPie\encrypt\PasswordPie;
 use ItakenPHPie\file\FileThroughPie;
 use ItakenPHPie\file\XmlPie;
 use ItakenPHPie\html\HtmlConvertPie;
-use ItakenPHPie\filter\WordFilterPie;
+use ItakenPHPie\text\FilterPie;
 use ItakenPHPie\html\TagPie;
 use ItakenPHPie\http\ClientPie;
 
 // $res = ConfigPie::get('basic/mimes');
-// $res = WordFilterPie::sensitiveFilter('测试');
+$res = FilterPie::sensitiveFilter('测试');
 // $res = TerminalPie::isWap();
 // $res = CharsetPie::toAlphabet('À|Á|Â|Ã|Ä|Å|Ǻ|Ā|Ă|Ą|Ǎ|A|à|á|â|ã');
 // $res = LangPie::toTrad('中华人民共和国');
