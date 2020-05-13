@@ -1,10 +1,10 @@
 <?php
 
-namespace ItakenPHPie\chinese;
+namespace ItakenPHPie\text;
 
 include('lib/ChineseSTConvert.class.php');
 
-use ItakenPHPie\chinese\lib\ChineseSTConvert;
+use ItakenPHPie\text\lib\ChineseSTConvert;
 
 /**
  * 汉字转拼音

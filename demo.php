@@ -44,12 +44,12 @@ use ItakenPHPie\http\IpPie;
 use ItakenPHPie\http\CurlPie;
 use ItakenPHPie\other\TimePie;
 use ItakenPHPie\http\OutputPie;
-use ItakenPHPie\chinese\LangPie;
+use ItakenPHPie\text\LangPie;
 use ItakenPHPie\config\ConfigPie;
-use ItakenPHPie\chinese\PinyinPie;
+use ItakenPHPie\text\PinyinPie;
 use ItakenPHPie\other\LocationPie;
 use ItakenPHPie\cache\FileCachePie;
-use ItakenPHPie\charset\CharsetPie;
+use ItakenPHPie\text\CharsetPie;
 use ItakenPHPie\encrypt\EncryptPie;
 use ItakenPHPie\file\FileDetectPie;
 use ItakenPHPie\browser\TerminalPie;
@@ -90,7 +90,7 @@ $html=<<<HTML
     <a href="javascript:">链接</a>
 </div>
 HTML;
-$res = HtmlConvertPie::ubbEncode($html);
+// $res = HtmlConvertPie::ubbEncode($html);
 // $res = OutputPie::jsonEcho(['abc' => 111]);
 // $res = OutputPie::jsonOutput(['abc' => 111]);
 // $res = OutputPie::redirect('https://baidu.com');

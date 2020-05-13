@@ -1,8 +1,8 @@
 <?php
 
-namespace ItakenPHPie\charset;
+namespace ItakenPHPie\text;
 
-use ItakenPHPie\chinese\PinyinPie;
+use ItakenPHPie\text\PinyinPie;
 use ItakenPHPie\config\ConfigPie;
 
 /**

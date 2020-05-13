@@ -1,6 +1,6 @@
 <?php
 
-namespace ItakenPHPie\security;
+namespace ItakenPHPie\html;
 
 /**
  * 格式化
@@ -8,7 +8,7 @@ namespace ItakenPHPie\security;
  * @modify itaken<regelhh@gmail.com>
  * @since 2020-05-10
  */
-final class FilterPie
+final class SecurityPie
 {
 
     /**

@@ -23,7 +23,7 @@ final class ConfigPie
      * @param mixed $params 附加参数
      * @return mixed
      */
-    public static function get(string $path, $name = null, array $params = [])
+    public static function get(string $path, $name=null, array $params=[])
     {
         if (empty($path)) {
             return null;

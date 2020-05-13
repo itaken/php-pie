@@ -1,6 +1,6 @@
 <?php
 
-namespace ItakenPHPie\chinese\lib;
+namespace ItakenPHPie\text\lib;
 
 /**
  * 中文简体繁体转换

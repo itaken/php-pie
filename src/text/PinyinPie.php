@@ -1,10 +1,10 @@
 <?php
 
-namespace ItakenPHPie\chinese;
+namespace ItakenPHPie\text;
 
 include('lib/cn2pinyin.class.php');
 
-use ItakenPHPie\chinese\lib\cn2pinyin;
+use ItakenPHPie\text\lib\cn2pinyin;
 
 /**
  * 汉字转拼音

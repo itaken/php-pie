@@ -1,6 +1,6 @@
 <?php
 
-namespace ItakenPHPie\other;
+namespace ItakenPHPie\algorithm;
 
 /**
  * 排序

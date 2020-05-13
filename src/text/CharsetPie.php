@@ -1,6 +1,8 @@
 <?php
 
-namespace ItakenPHPie\charset;
+namespace ItakenPHPie\text;
+
+use ItakenPHPie\config\ConfigPie;
 
 /**
  * 字符串
@@ -18,11 +20,7 @@ final class CharsetPie
      */
     public static function getCharacterConfig()
     {
-        static $tCharacterConfig = null;
-        if (is_null($tCharacterConfig)) {
-            $tCharacterConfig = include(__DIR__ . '/characters.conf.php');
-        }
-        return $tCharacterConfig;
+        return ConfigPie::get('basic/characters');
     }
 
     /**

@@ -15,7 +15,7 @@ final class TimePie
      *
      * @return string
      */
-    public static function getGMTtime()
+    public static function getGMTTime(): string
     {
         return gmdate('l d F Y H:i:s', time() + 60) . ' GMT';
     }
