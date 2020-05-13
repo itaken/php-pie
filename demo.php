@@ -93,12 +93,12 @@ HTML;
 // $res = HtmlConvertPie::ubbEncode($html);
 // $res = OutputPie::jsonEcho(['abc' => 111]);
 // $res = OutputPie::jsonOutput(['abc' => 111]);
-// $res = OutputPie::redirect('https://baidu.com');
-// $res = OutputPie::alertRedirect('https://baidu.com');
+// $res = OutputPie::redirect('https://bing.com');
+// $res = OutputPie::alertRedirect('https://bing.com');
 // $res = OutputPie::showMessage('内容');
 // $res = TimePie::timeDist(strtotime('2020-05-10 22:01:01'));
 // $res = TimePie::timeCn(strtotime('2020-05-10 22:01:01'));
-// $res = CurlPie::get('http://baidu.com/');
+// $res = CurlPie::get('https://bing.com');
 // $res = IpPie::queryIpAddress('103.84.139.98');
 // $res = ConfigPie::loadEnv();
 // $res = LocationPie::getLbsMap(29.918017, 121.606546);
@@ -107,7 +107,7 @@ HTML;
 // $res = FileCachePie::cache(null);
 // $res = PasswordPie::isWeakPsw(12354);
 // $res = TagPie::json2html('{"l1":{"l1_1":["l1_1_1","l1_1_2"],"l1_2":{"l1_2_1":121}},"l2":{"l2_1":null,"l2_2":true,"l2_3":[]}}');
-// $res = ClientPie::getSoapResult('http://localhost/test.asmx?wsdl', []);
+// $res = ClientPie::getSoapResult('https://localhost/test.asmx?wsdl', []);
 // $res = ClientPie::getClientInfo();
 // $dataArray = [
 // 	[
@@ -131,6 +131,7 @@ HTML;
 // $dom = XmlPie::parseDom('<books><book><title>Great American Novel</title></book></books>');
 // $res = $dom->book[0]->title; // Great American Novel
 // $res = ClientPie::getMemoryUsageImplement();
+// $res = IpPie::analysisIpInfoByGeo('103.84.139.98');
 
 
 p($res);

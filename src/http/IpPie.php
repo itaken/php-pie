@@ -76,4 +76,27 @@ final class IpPie
         $array_res = json_decode($apiRes, true);
         return isset($array_res['content']) ? $array_res['content'] : false;
     }
+
+    /**
+     * 通过GeoIp分析Ip
+     * 
+     * @param string $ip
+     * @return array
+     */
+    public static function analysisIpInfoByGeo($ip)
+    {
+        if(!function_exists('\GeoIp2\Database\Reader')){
+            require(__DIR__ . '/lib/geoip2.phar');
+        }
+        $reader = new \GeoIp2\Database\Reader(__DIR__.'/lib/GeoLite2-City.mmdb');
+        $geoObj = $reader->city($ip)->raw;
+        if(empty($geoObj)){
+            return [];
+        }
+        return [
+            'continent' => $geoObj['continent'],
+            'country' => $geoObj['country'],
+            'city' => $geoObj['city'],
+        ];
+    }
 }
