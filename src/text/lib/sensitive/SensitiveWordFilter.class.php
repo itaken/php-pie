@@ -113,7 +113,7 @@ class SensitiveWordFilter
      *
      * @return string[]
      */
-    protected function splitStr($str)
+    protected function stringSplit($str)
     {
         return preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
     }
@@ -126,7 +126,7 @@ class SensitiveWordFilter
      */
     protected function addWords($words)
     {
-        $wordArr = $this->splitStr($words);
+        $wordArr = $this->stringSplit($words);
         $curNode = &$this->dict;
         foreach ($wordArr as $char) {
             if (!isset($curNode)) {
@@ -155,7 +155,7 @@ class SensitiveWordFilter
     public function filter($str, $replace = '*', $skipDistance = 0)
     {
         $maxDistance = max($skipDistance, 0) + 1;
-        $strArr = $this->splitStr($str);
+        $strArr = $this->stringSplit($str);
         $length = count($strArr);
         $matchFullText = '';
         for ($i = 0; $i < $length; $i++) {
@@ -215,7 +215,7 @@ class SensitiveWordFilter
      */
     public function isMatch($strArr)
     {
-        $strArr = is_array($strArr) ? $strArr : $this->splitStr($strArr);
+        $strArr = is_array($strArr) ? $strArr : $this->stringSplit($strArr);
         $curNode = &$this->dict;
 
         foreach ($strArr as $char) {

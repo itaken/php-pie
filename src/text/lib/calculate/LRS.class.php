@@ -4,7 +4,7 @@ namespace ItakenPHPie\text\lib\calculate;
 
 /**
  * 寻找一个字符串的重复子串
- * @doc https://segmentfault.com/a/1190000002646526
+ * @doc https://segmentfault.com/a/1190000002646526  https://segmentfault.com/a/1190000002641054
  * 
  * @author itaken<regelhh@gmail.com>
  * @since 2020-05-14
@@ -13,12 +13,12 @@ class LRS
 {
 
     /**
-     * 分割文本(注意ascii占1个字节, unicode...)
+     * 分割文本
      *
      * @param string $str
      * @return array
      */
-    public static function splitStr($str)
+    public static function stringSplit($str)
     {
         if(empty($str) || !is_string($str)){
             return [];
@@ -38,7 +38,7 @@ class LRS
     {
         $curLen = 0;
         $strLen = mb_strlen($word);  // 计算文本长度
-        $wordArr = self::splitStr($word);  // 分割字符组
+        $wordArr = self::stringSplit($word);  // 分割字符组
         while ($k< $strLen && $j < $strLen && $wordArr[$k] == $wordArr[$j]) {
             $k++;
             $j++;

@@ -23,13 +23,13 @@ final class StringPie
      * @param string $str
      * @return array
      */
-    public static function splitStr($str)
+    public static function stringSplit($str)
     {
         if(empty($str) || !is_string($str)){
             return [];
         }
         // preg_match_all("/./us", $str, $match);
-        // $worldArr = $match[0];
+        // return $match[0] ?: [];
         return preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
     }
 
@@ -56,24 +56,22 @@ final class StringPie
         return PinyinPie::toPinyin($text);
     }
 
-    
     /**
      * 词汇分割
      * 
      * @param string $string 
      * @return array 
      */
-    public static function stringSplit($string)
+    public static function symbolSplit($string)
     {
         $string = trim($string);
         if (empty($string)) {
             return false;
         }
         // (空格 逗号, 中分号| 点. 分号; 冒号: 斜杠/ 反斜杠\ 横杠- 中文横杠- 下划线 _ 星号 * 中文分隔符等)
-        $split_arr = preg_split('/(\s+)|((,|\||\.|;|:|\/|\\|-|-|_|\*|\+|=|，|；|：|。|、|—)+)/', $string);
-        $split_space = array_diff($split_arr, array(''));  // 去空格
-
-        return $split_space;
+        $stringArr = preg_split('/(\s+)|((,|\||\.|;|:|\/|\\|-|-|_|\*|\+|=|，|；|：|。|、|—)+)/', $string);
+        
+        return array_diff($stringArr, ['']);  // 去空格
     }
 
     /**

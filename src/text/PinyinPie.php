@@ -32,7 +32,7 @@ final class PinyinPie
             return $text;
         }
         // 分割字符串
-        $worldArr = StringPie::splitStr($text);
+        $worldArr = StringPie::stringSplit($text);
 
         $pinyin = '';
         $letterArr = ['a','e','i','o','u'];

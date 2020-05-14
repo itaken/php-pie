@@ -67,7 +67,7 @@ use ItakenPHPie\text\StringPie;
 // $res = TerminalPie::isWap();
 // $res = CharsetPie::toAlphabet('À|Á|Â|Ã|Ä|Å|Ǻ|Ā|Ă|Ą|Ǎ|A|à|á|â|ã');
 // $res = LangPie::toTrad('中华人民共和国');
-$res = PinyinPie::toPinyin('中华人民共和国');
+// $res = PinyinPie::toPinyin('中华人民共和国');
 // echo $str = EncryptPie::strEncrypt('同一个世界,同一个梦想', '奥运');
 // $res = EncryptPie::strDecrypt($str, '奥运');
 // echo $str = EncryptPie::int2string(234523);
@@ -134,6 +134,8 @@ HTML;
 // $res = ClientPie::getMemoryUsageImplement();
 // $res = IpPie::analysisIpInfoByGeo('103.84.139.98');
 // $res = StringPie::calculateText('我只是测试我just测试');
+// $res = StringPie::symbolSplit('我 只-是_测+试;');
+// $res = StringPie::zhStringSplit('我 只-是_测+试;');
 
 
 p($res);
