@@ -60,13 +60,14 @@ use ItakenPHPie\html\HtmlConvertPie;
 use ItakenPHPie\text\FilterPie;
 use ItakenPHPie\html\TagPie;
 use ItakenPHPie\http\ClientPie;
+use ItakenPHPie\text\StringPie;
 
 // $res = ConfigPie::get('basic/mimes');
-$res = FilterPie::sensitiveFilter('测试');
+// $res = FilterPie::sensitiveFilter('测试');
 // $res = TerminalPie::isWap();
 // $res = CharsetPie::toAlphabet('À|Á|Â|Ã|Ä|Å|Ǻ|Ā|Ă|Ą|Ǎ|A|à|á|â|ã');
 // $res = LangPie::toTrad('中华人民共和国');
-// $res = PinyinPie::toPinyin('中华人民共和国');
+$res = PinyinPie::toPinyin('中华人民共和国');
 // echo $str = EncryptPie::strEncrypt('同一个世界,同一个梦想', '奥运');
 // $res = EncryptPie::strDecrypt($str, '奥运');
 // echo $str = EncryptPie::int2string(234523);
@@ -132,6 +133,7 @@ HTML;
 // $res = $dom->book[0]->title; // Great American Novel
 // $res = ClientPie::getMemoryUsageImplement();
 // $res = IpPie::analysisIpInfoByGeo('103.84.139.98');
+// $res = StringPie::calculateText('我只是测试我just测试');
 
 
 p($res);

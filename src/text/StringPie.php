@@ -2,8 +2,11 @@
 
 namespace ItakenPHPie\text;
 
+include('lib/calculate/LRS.class.php');
+
 use ItakenPHPie\text\PinyinPie;
 use ItakenPHPie\config\ConfigPie;
+use ItakenPHPie\text\lib\calculate\LRS;
 
 /**
  * 字符串
@@ -25,6 +28,8 @@ final class StringPie
         if(empty($str) || !is_string($str)){
             return [];
         }
+        // preg_match_all("/./us", $str, $match);
+        // $worldArr = $match[0];
         return preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
     }
 
@@ -146,6 +151,33 @@ final class StringPie
             $i++;
         }
         return substr_replace($str, $star, $start, $count);
+    }
+
+
+    /**
+     * 计算 两个字符串 的相似度
+     *
+     * @param string $text1
+     * @param string $text2
+     * @return float 相似百分比，示例：82.352941176471
+     */
+    public static function similarText($text1, $text2)
+    {
+        $percent = 0;
+        \similar_text($text1, $text2, $percent);
+        
+        return $percent;
+    }
+
+    /**
+     * 计算一个字符串的重复子串
+     *
+     * @param string $text
+     * @return int 重复字符串数
+     */
+    public static function calculateText($text)
+    {
+        return LRS::naiveLRS($text);
     }
 
 }

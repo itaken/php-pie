@@ -40,4 +40,5 @@ final class CharsetPie
         }
         return $text;
     }
+
 }

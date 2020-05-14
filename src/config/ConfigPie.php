@@ -80,8 +80,8 @@ final class ConfigPie
      * @doc https://www.php.net/manual/en/function.parse-ini-file.php
      *
      * @param string|null $name
-     * @param bool $section 是否分块
      * @param mixed $defaultVal 默认值
+     * @param bool $section 是否分块
      * @param string $iniFile ini文件路径
      * @return array
      */
@@ -89,7 +89,7 @@ final class ConfigPie
     {
         static $tIni = null;
         if (is_null($tIni)) {
-            $iniFile = $iniFile ?: dirname(dirname(__DIR__)) .'/.env';
+            $iniFile = $iniFile ?: dirname(dirname(__DIR__)) .'/itaken.ini';
             if(file_exists($iniFile)){
                 $tIni = \parse_ini_file($iniFile, $section);
             }

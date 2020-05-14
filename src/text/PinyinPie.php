@@ -2,9 +2,9 @@
 
 namespace ItakenPHPie\text;
 
-include('lib/pinyin/cn2pinyin.class.php');
+include('lib/chinese/cn2pinyin.class.php');
 
-use ItakenPHPie\text\lib\pinyin\cn2pinyin;
+use ItakenPHPie\text\lib\chinese\cn2pinyin;
 
 /**
  * 汉字转拼音
@@ -31,25 +31,25 @@ final class PinyinPie
         if (preg_match("#^[0-9a-zA-Z_-]+$#is", $text)) {
             return $text;
         }
-        preg_match_all("/./us", $text, $match);
-        
+        // 分割字符串
+        $worldArr = StringPie::splitStr($text);
+
         $pinyin = '';
         $letterArr = ['a','e','i','o','u'];
         $pinyinObj = new cn2pinyin();
-        foreach ($match[0] as $value) {
-            $tmp = $pinyinObj->get($value);
+        foreach ($worldArr as $value) {
+            $tmpPinyin = $pinyinObj->get($value);
 
             $pyLen = strlen($pinyin); // 长度
-            $pyChart =substr($pinyin, $pyLen-1, 1);
+            $pyChart = substr($pinyin, $pyLen-1, 1);
             if (
-                $pinyin &&
-                !in_array(strtolower($pyChart), $letterArr) &&
-                in_array(strtolower(substr($tmp, 0, 1)), $letterArr)
+                $pinyin && !in_array(strtolower($pyChart), $letterArr) &&
+                in_array(strtolower(substr($tmpPinyin, 0, 1)), $letterArr)
             ) {
-                $tmp = "'".$tmp;
+                $tmpPinyin = "'".$tmpPinyin;
             }
-            $pinyin .= $div . $tmp;
+            $pinyin .= $div . $tmpPinyin;
         }
-        return strtolower($pinyin);
+        return trim($pinyin);
     }
 }

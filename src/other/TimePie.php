@@ -176,4 +176,30 @@ final class TimePie
         $time_str = $day_str . ' ' . $apmMap[$am_pm] . date('g:i', $timestamp);
         return $time_str;
     }
+
+    /**
+     * 格式化时间显示
+     *
+     * @param int $timestamp 时间戳
+     * @return string 例如：1 周前
+     */
+    public static function niceTime($timestamp)
+    {
+        $unixTime = is_numeric($timestamp) ? $timestamp : strtotime($timestamp);
+        $periods = ['秒', '分', '小时', '天', '周', '月', '年', '十年'];
+        $lengths = ['60','60','24','7','4.35','12','10'];
+        $now = time();
+        if ($now > $unixTime) {
+            $difference = $now - $unixTime;
+            $tense = '前';
+        } else {
+            $difference = $unixTime - $now;
+            $tense = '后';
+        }  
+        for ($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
+            $difference /= $lengths[$j];
+        }
+        $difference = round($difference);
+        return "{$difference} {$periods[$j]}{$tense}";
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace ItakenPHPie\text\lib\pinyin;
+namespace ItakenPHPie\text\lib\chinese;
 
 /*
  * By Missde.cn

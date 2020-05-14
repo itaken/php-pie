@@ -4,6 +4,7 @@ namespace ItakenPHPie\text;
 
 include('lib/sensitive/SensitiveWordFilter.class.php');
 
+use ItakenPHPie\text\StringPie;
 use ItakenPHPie\text\lib\sensitive\SensitiveWordFilter;
 
 /**
@@ -38,5 +39,16 @@ final class FilterPie
             'match' => $filter->getMatchDict(),
             'full_match' => $filter->getMatchFullDict(),
         ];
+    }
+
+    /**
+     * 全角转半角
+     *
+     * @param string $str
+     * @return string
+     */
+    public static function sbc2dbc(string $str)
+    {
+        return StringPie::sbc2dbc($str);
     }
 }

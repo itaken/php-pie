@@ -11,13 +11,12 @@ namespace ItakenPHPie\text\lib\sensitive;
  */
 class SensitiveWordFilter
 {
-    protected $dict;
-
     /**
      * @var string 敏感词文件（一行一个敏感词）
      */
     protected $dictFile = __DIR__ . '/dirty_words.txt';
 
+    protected $dict = [];
     protected $matchDict = [];
     protected $matchFullDict = [];
 
@@ -67,7 +66,7 @@ class SensitiveWordFilter
         if ($cache && $this->dict) {
             return;
         }
-        $cacheKey = __CLASS__ . "_" . md5($this->dictFile);
+        $cacheKey = __METHOD__ . '::' . md5($this->dictFile);
         $dict = $cache ? $this->cache($cacheKey) : null;
         if (empty($dict)) {
             // 从字典中加载
@@ -187,7 +186,6 @@ class SensitiveWordFilter
                 $matchIndex[] = $j;
                 $curNode = &$curNode[$strArr[$j]];
             }
-
             
             // 匹配
             if (isset($curNode['end'])) {

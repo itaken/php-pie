@@ -13,6 +13,17 @@ use ItakenPHPie\http\CurlPie;
 final class CheckPie
 {
     /**
+     * 判断是否URL
+     *
+     * @param string $url
+     * @return bool
+     */
+    public static function isUrl($url)
+    {
+        return CurlPie::isUrl($url);
+    }
+
+    /**
      * 判断 URL 是否有效
      *
      * @param string $url 传入的链接
@@ -20,7 +31,7 @@ final class CheckPie
      */
     public static function isUrlAvailable($url)
     {
-        if (!CurlPie::isUrl($url)) {
+        if (!self::isUrl($url)) {
             return false;
         }
         try {
