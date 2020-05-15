@@ -6,7 +6,7 @@ namespace ItakenPHPie\text\lib\calculate;
  * 寻找一个字符串的重复子串
  * @doc https://segmentfault.com/a/1190000002646526  https://segmentfault.com/a/1190000002641054
  * 
- * @author itaken<regelhh@gmail.com>
+ * @modify itaken<regelhh@gmail.com>
  * @since 2020-05-14
  */
 class LRS
@@ -18,7 +18,7 @@ class LRS
      * @param string $str
      * @return array
      */
-    public static function stringSplit($str)
+    private static function stringSplit($str)
     {
         if(empty($str) || !is_string($str)){
             return [];
