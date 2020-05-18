@@ -60,6 +60,7 @@ use ItakenPHPie\html\HtmlConvertPie;
 use ItakenPHPie\text\FilterPie;
 use ItakenPHPie\html\TagPie;
 use ItakenPHPie\http\ClientPie;
+use ItakenPHPie\other\FormatPie;
 use ItakenPHPie\text\StringPie;
 
 // $res = ConfigPie::get('basic/mimes');
@@ -136,6 +137,7 @@ HTML;
 // $res = StringPie::calculateText('我只是测试我just测试');
 // $res = StringPie::symbolSplit('我 只-是_测+试;');
 // $res = StringPie::zhStringSplit('我 只-是_测+试;');
+// $res = FormatPie::rmbFormat(1003);
 
 
 p($res);

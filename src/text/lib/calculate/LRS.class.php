@@ -4,7 +4,8 @@ namespace ItakenPHPie\text\lib\calculate;
 
 /**
  * 寻找一个字符串的重复子串
- * @doc https://segmentfault.com/a/1190000002646526  https://segmentfault.com/a/1190000002641054
+ * @doc https://segmentfault.com/a/1190000002646526
+ * @doc https://segmentfault.com/a/1190000002641054
  * 
  * @modify itaken<regelhh@gmail.com>
  * @since 2020-05-14

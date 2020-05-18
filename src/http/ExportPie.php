@@ -69,7 +69,7 @@ final class ExportPie
 
     /**
      * PHP-HTTP断点续传实现
-     * 
+     *
      * @param string $path 文件所在路径
      * @param string $file 文件名
      * @return void
@@ -115,5 +115,57 @@ final class ExportPie
             ob_flush();
         }
         fclose($fp);
+    }
+
+
+    /**
+     * 导出excel表格数据
+     * @doc https://segmentfault.com/a/1190000022618887
+     *
+     * @param array $data 表格数据，一个二维数组
+     * @param array $title 第一行标题，一维数组
+     * @param string $filename 下载的文件名
+     * @return void
+     */
+    public static function exportExcel($data = [], $title = [], $filename = '')
+    {
+        // 默认文件名为时间戳
+        if (empty($filename)) {
+            $filename = time();
+        }
+        // 定义输出header信息
+        header("Content-type:application/octet-stream;charset=GBK");
+        header("Accept-Ranges:bytes");
+        header("Content-type:application/vnd.ms-excel");
+        header("Content-Disposition:attachment;filename=" . $filename . ".xls");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+        ob_start();
+        echo "<head><meta http-equiv='Content-type' content='text/html;charset=GBK' /></head> <table border=1 style='text-align:center'>\n";
+        // 导出xls开始，先写表头
+        if (!empty($title)) {
+            foreach ($title as $k => $v) {
+                $title[$k] = iconv("UTF-8", "GBK//IGNORE", $v);
+            }
+            $title = "<td>" . implode("</td>\t<td>", $title) . "</td>";
+            echo "<tr>$title</tr>\n";
+        }
+        // 再写表数据
+        if (!empty($data)) {
+            foreach ($data as $key => $val) {
+                foreach ($val as $ck => $cv) {
+                    if (is_numeric($cv) && strlen($cv) < 12) {
+                        $data[$key][$ck] = '<td>' . mb_convert_encoding($cv, "GBK", "UTF-8") . "</td>";
+                    } else {
+                        $data[$key][$ck] = '<td style="vnd.ms-excel.numberformat:@;">' . iconv("UTF-8", "GBK//IGNORE", $cv) . "</td>";
+                    }
+                }
+                $data[$key] = "<tr>" . implode("\t", $data[$key]) . "</tr>";
+            }
+            echo implode("\n", $data);
+        }
+        echo "</table>";
+        ob_flush();
+        exit;
     }
 }

@@ -223,4 +223,5 @@ final class OutputPie
 
         return $buffer;
     }
+
 }
