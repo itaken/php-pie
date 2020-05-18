@@ -20,29 +20,29 @@ final class StringPie
     /**
      * 分割文本(注意ascii占1个字节, unicode...)
      *
-     * @param string $str
+     * @param string $text
      * @return array
      */
-    public static function stringSplit($str)
+    public static function stringSplit($text)
     {
-        if(empty($str) || !is_string($str)){
+        if(empty($text) || !is_string($text)){
             return [];
         }
-        // preg_match_all("/./us", $str, $match);
+        // preg_match_all("/./us", $text, $match);
         // return $match[0] ?: [];
-        return preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
+        return preg_split("//u", $text, -1, PREG_SPLIT_NO_EMPTY);
     }
 
     /**
      * 全角转半角
      *
-     * @param string $str
+     * @param string $text
      * @return string
      */
-    public static function sbc2dbc(string $str)
+    public static function sbc2dbc(string $text)
     {
         $map = ConfigPie::get('basic/sbc');
-        return strtr($str, $map);
+        return strtr($text, $map);
     }
 
     /**
@@ -66,10 +66,10 @@ final class StringPie
     {
         $string = trim($string);
         if (empty($string)) {
-            return false;
+            return [];
         }
         // (空格 逗号, 中分号| 点. 分号; 冒号: 斜杠/ 反斜杠\ 横杠- 中文横杠- 下划线 _ 星号 * 中文分隔符等)
-        $stringArr = preg_split('/(\s+)|((,|\||\.|;|:|\/|\\|-|-|_|\*|\+|=|，|；|：|。|、|—)+)/', $string);
+        $stringArr = preg_split('/(\s+)|((,|\||\.|;|:|\/|\\|-|-|_|\*|\+|=|\#|\$|\%|\^|~|，|；|：|。|、|—)+)/', $string);
         
         return array_diff($stringArr, ['']);  // 去空格
     }
@@ -83,72 +83,110 @@ final class StringPie
     public static function zhStringSplit($string)
     {
         if (empty($string) || !is_string($string)) {
-            return false;
+            return [];
         }
+        $stringArr = [];
         mb_internal_encoding('UTF-8');  // 设置内部编码方式
         $len = mb_strlen($string);
         for ($i = 0; $i < $len; $i++) {
             $str = mb_substr($string, $i, 1);
-            $arr[] = $str;
+            $stringArr[] = $str;
             $str = null;
         }
-        return $arr;
+        return $stringArr;
     }
 
     /**
-     * 内容替换
+     * 内容替换 （支持中文）
      * @doc http://www.cnblogs.com/strick/p/3936074.html
      * 
-     * @param string $str 文本内容
+     * @param string $text 文本内容
      * @param int $start 开始位置
      * @param int $length 截取长度 ( 0 为start之后所有 )
      */
-    public static function replaceStar($str, $start, $length = 0)
+    public static function replaceStar($text, $start, $length = 0)
     {
         $i = 0;
-        $star = '';
+        $replacement = '';
         if($start >= 0) {
             if($length > 0) {
-                $str_len = strlen($str);
+                $strLen = mb_strlen($text);
                 $count = $length;
-                if($start >= $str_len) {//当开始的下标大于字符串长度的时候，就不做替换了
+                if($start >= $strLen) {//当开始的下标大于字符串长度的时候，就不做替换了
                     $count = 0;
                 }
             }elseif($length < 0){
-                $str_len = strlen($str);
+                $strLen = mb_strlen($text);
                 $count = abs($length);
-                if($start >= $str_len) {//当开始的下标大于字符串长度的时候，由于是反向的，就从最后那个字符的下标开始
-                    $start = $str_len - 1;
+                if($start >= $strLen) {//当开始的下标大于字符串长度的时候，由于是反向的，就从最后那个字符的下标开始
+                    $start = $strLen - 1;
                 }
                 $offset = $start - $count + 1;//起点下标减去数量，计算偏移量
                 $count = $offset >= 0 ? abs($length) : ($start + 1);//偏移量大于等于0说明没有超过最左边，小于0了说明超过了最左边，就用起点到最左边的长度
                 $start = $offset >= 0 ? $offset : 0;//从最左边或左边的某个位置开始
             }else {
-                $str_len = strlen($str);
-                $count = $str_len - $start;//计算要替换的数量
+                $strLen = mb_strlen($text);
+                $count = $strLen - $start;//计算要替换的数量
             }
         }else {
             if($length > 0) {
                 $offset = abs($start);
                 $count = $offset >= $length ? $length : $offset;//大于等于长度的时候 没有超出最右边
             }elseif($length < 0){
-                $str_len = strlen($str);
-                $end = $str_len + $start;//计算偏移的结尾值
+                $strLen = mb_strlen($text);
+                $end = $strLen + $start;//计算偏移的结尾值
                 $offset = abs($start + $length) - 1;//计算偏移量，由于都是负数就加起来
-                $start = $str_len - $offset;//计算起点值
+                $start = $strLen - $offset;//计算起点值
                 $start = $start >= 0 ? $start : 0;
                 $count = $end - $start + 1;
             }else {
-                $str_len = strlen($str);
-                $count = $str_len + $start + 1;//计算需要偏移的长度
+                $strLen = mb_strlen($text);
+                $count = $strLen + $start + 1;//计算需要偏移的长度
                 $start = 0;
             }
         }
         while ($i < $count) {
-            $star .= '*';
+            $replacement .= '*';
             $i++;
         }
-        return substr_replace($str, $star, $start, $count);
+        // return substr_replace($text, $replacement, $start, $count);
+        return self::mbSubstrReplace($text, $replacement, $start, $count);
+    }
+
+    /**
+     * 文本替换 (支持中文)
+     * @doc https://www.php.net/manual/en/function.substr-replace.php
+     * 
+     * @param string $string
+     * @param string $replacement 替换的文案
+     * @param int $start 开始位置
+     * @param int $length 替换长度
+     * @param string $encoding 编码
+     * @return string
+     */
+    public static function mbSubstrReplace($string, $replacement, $start, $length = null, $encoding = null)
+    {
+        if (extension_loaded('mbstring') === true){
+            $string_length = (is_null($encoding) === true) ? mb_strlen($string) : mb_strlen($string, $encoding);
+            if ($start < 0){
+                $start = max(0, $string_length + $start);
+            }else if ($start > $string_length){
+                $start = $string_length;
+            }
+            if ($length < 0){
+                $length = max(0, $string_length - $start + $length);
+            }else if ((is_null($length) === true) || ($length > $string_length)){
+                $length = $string_length;
+            }
+            if (($start + $length) > $string_length){
+                $length = $string_length - $start;
+            }
+            if (is_null($encoding) === true){
+                return mb_substr($string, 0, $start) . $replacement . mb_substr($string, $start + $length, $string_length - $start - $length);
+            }
+            return mb_substr($string, 0, $start, $encoding) . $replacement . mb_substr($string, $start + $length, $string_length - $start - $length, $encoding);
+        }
+        return (is_null($length) === true) ? substr_replace($string, $replacement, $start) : substr_replace($string, $replacement, $start, $length);
     }
 
 

@@ -53,9 +53,10 @@ use ItakenPHPie\text\CharsetPie;
 use ItakenPHPie\encrypt\EncryptPie;
 use ItakenPHPie\file\FileDetectPie;
 use ItakenPHPie\browser\TerminalPie;
+use ItakenPHPie\encrypt\HiddenPie;
 use ItakenPHPie\encrypt\PasswordPie;
 use ItakenPHPie\file\FileThroughPie;
-use ItakenPHPie\file\XmlPie;
+use ItakenPHPie\html\XmlPie;
 use ItakenPHPie\html\HtmlConvertPie;
 use ItakenPHPie\text\FilterPie;
 use ItakenPHPie\html\TagPie;
@@ -130,6 +131,7 @@ HTML;
 //     ],
 // ];
 // $res = XmlPie::xmlWriter($dataArray, $attributeArray);
+// $res = XmlPie::xml2array($res);
 // $dom = XmlPie::parseDom('<books><book><title>Great American Novel</title></book></books>');
 // $res = $dom->book[0]->title; // Great American Novel
 // $res = ClientPie::getMemoryUsageImplement();
@@ -138,6 +140,12 @@ HTML;
 // $res = StringPie::symbolSplit('我 只-是_测+试;');
 // $res = StringPie::zhStringSplit('我 只-是_测+试;');
 // $res = FormatPie::rmbFormat(1003);
+// $res = StringPie::replaceStar('replace text within a portion of a string', 3, 2);
+// $res = StringPie::mbSubstrReplace('PHP是一种开源的通用计算机脚本语言', '*', 3, 2);
+// $res = TimePie::getMsTimestamp();
+// $res = HiddenPie::phoneHide('13800138000');
+
+
 
 
 p($res);

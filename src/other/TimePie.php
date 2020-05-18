@@ -21,6 +21,16 @@ final class TimePie
     }
 
     /**
+     * 获取13位时间戳(毫秒)
+     *
+     * @return int
+     */
+    public static function getMsTimestamp()
+    {
+        return (int)sprintf('%.0f', microtime(true) * 1000);
+    }
+
+    /**
      * 判断是否周末
      *
      * @param string $time 日期/时间戳
@@ -40,6 +50,17 @@ final class TimePie
     }
 
     /**
+     * 判断是否是闰年
+     *
+     * @param int $year 2020
+     * @return bool
+     */
+    public static function isLeapYear($year)
+    {
+        return ($year % 4 == 0) && ($year % 100 != 0 || $year % 400 == 0);
+    }
+
+    /**
      * 获取 星期名
      *
      * @param string $date 时间格式, 例如: 2018-6-30, 或者时间戳
@@ -54,13 +75,13 @@ final class TimePie
             $time = strtotime($date);
         }
         $week = date('w', $time);
-        $week_arr = [
+        $weekMap = [
             '周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日',
         ];
-        $week_arr_en = [
+        $weekEnMap = [
             'Sunday', 'Monday', 'Tuesday', 'Wednesday','Thursday', 'Friday', 'Saturday',  'Sunday',
         ];
-        return $en ? $week_arr_en[$week] : $week_arr[$week];
+        return $en ? $weekEnMap[$week] : $weekMap[$week];
     }
 
     /**
@@ -87,12 +108,12 @@ final class TimePie
     /**
      * 时间计算
      *
-     * 一分钟之内  ：  刚刚  ；
-     * 一个小时之内（大于一分钟）  ：xx 分钟前  ；
-     * 当天 （大于一小时） ： 上午  xx时xx 分，下午  xx 时 xx分;
-     * 其他的 : xx 年 xx 月 xx日
+     * 一分钟之内： 刚刚
+     * 一个小时之内(大于一分钟)：xx 分钟前
+     * 当天(大于一小时)： 上午 xx时xx 分，下午 xx 时 xx分
+     * 其他的: xx 年 xx 月 xx日
      *
-     * @param int $timestamp
+     * @param int $timestamp 时间戳
      * @return string 例如：下午10时01分
      */
     public static function timeDist($timestamp=0)
@@ -195,7 +216,7 @@ final class TimePie
         } else {
             $difference = $unixTime - $now;
             $tense = '后';
-        }  
+        }
         for ($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
             $difference /= $lengths[$j];
         }

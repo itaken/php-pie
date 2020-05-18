@@ -1,6 +1,6 @@
 <?php
 
-namespace ItakenPHPie\file;
+namespace ItakenPHPie\html;
 
 /**
  * XML
@@ -68,4 +68,23 @@ final class XmlPie
         }
         return \simplexml_import_dom($dom);
     }
+
+    /**
+     * 将xml格式转换为数组
+     *
+     * @param string $xml xml字符串
+     * @return mixed
+     */
+    public static function xml2array($xml = '')
+    {
+        if(empty($xml)){
+            return [];
+        }
+        // 利用函数simplexml_load_string()把xml字符串载入对象中
+        $obj = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        // 编码对象后，再解码即可得到数组
+        $arr = json_decode(json_encode($obj), true);
+        return $arr ?: [];
+    }
+
 }
