@@ -13,7 +13,8 @@
         }
     ],
     "require" : {
-        "php" : ">=7.0.8"
+        "php" : ">=7.0.8",
+        "ext-mbstring": "*"
     },
     "require-dev" : {
         "symfony/var-dumper" : "^3.4.22",

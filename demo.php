@@ -144,8 +144,7 @@ HTML;
 // $res = StringPie::mbSubstrReplace('PHP是一种开源的通用计算机脚本语言', '*', 3, 2);
 // $res = TimePie::getMsTimestamp();
 // $res = HiddenPie::phoneHide('13800138000');
-
-
+// $res = StringPie::md2html(file_get_contents('README.md'));
 
 
 p($res);

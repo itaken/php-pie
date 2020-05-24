@@ -3,10 +3,12 @@
 namespace ItakenPHPie\text;
 
 include('lib/calculate/LRS.class.php');
+include('lib/markdown/Parsedown.php');
 
 use ItakenPHPie\text\PinyinPie;
 use ItakenPHPie\config\ConfigPie;
 use ItakenPHPie\text\lib\calculate\LRS;
+use ItakenPHPie\text\lib\markdown\Parsedown;
 
 /**
  * 字符串
@@ -25,7 +27,7 @@ final class StringPie
      */
     public static function stringSplit($text)
     {
-        if(empty($text) || !is_string($text)){
+        if (empty($text) || !is_string($text)) {
             return [];
         }
         // preg_match_all("/./us", $text, $match);
@@ -58,9 +60,9 @@ final class StringPie
 
     /**
      * 词汇分割
-     * 
-     * @param string $string 
-     * @return array 
+     *
+     * @param string $string
+     * @return array
      */
     public static function symbolSplit($string)
     {
@@ -76,7 +78,7 @@ final class StringPie
 
     /**
      * 分割字符[可分割中文]
-     * 
+     *
      * @param string $string 需要分割的字符串
      * @return array 分割后的字符
      */
@@ -99,7 +101,7 @@ final class StringPie
     /**
      * 内容替换 （支持中文）
      * @doc http://www.cnblogs.com/strick/p/3936074.html
-     * 
+     *
      * @param string $text 文本内容
      * @param int $start 开始位置
      * @param int $length 截取长度 ( 0 为start之后所有 )
@@ -108,38 +110,38 @@ final class StringPie
     {
         $i = 0;
         $replacement = '';
-        if($start >= 0) {
-            if($length > 0) {
+        if ($start >= 0) {
+            if ($length > 0) {
                 $strLen = mb_strlen($text);
                 $count = $length;
-                if($start >= $strLen) {//当开始的下标大于字符串长度的时候，就不做替换了
+                if ($start >= $strLen) {//当开始的下标大于字符串长度的时候，就不做替换了
                     $count = 0;
                 }
-            }elseif($length < 0){
+            } elseif ($length < 0) {
                 $strLen = mb_strlen($text);
                 $count = abs($length);
-                if($start >= $strLen) {//当开始的下标大于字符串长度的时候，由于是反向的，就从最后那个字符的下标开始
+                if ($start >= $strLen) {//当开始的下标大于字符串长度的时候，由于是反向的，就从最后那个字符的下标开始
                     $start = $strLen - 1;
                 }
                 $offset = $start - $count + 1;//起点下标减去数量，计算偏移量
                 $count = $offset >= 0 ? abs($length) : ($start + 1);//偏移量大于等于0说明没有超过最左边，小于0了说明超过了最左边，就用起点到最左边的长度
                 $start = $offset >= 0 ? $offset : 0;//从最左边或左边的某个位置开始
-            }else {
+            } else {
                 $strLen = mb_strlen($text);
                 $count = $strLen - $start;//计算要替换的数量
             }
-        }else {
-            if($length > 0) {
+        } else {
+            if ($length > 0) {
                 $offset = abs($start);
                 $count = $offset >= $length ? $length : $offset;//大于等于长度的时候 没有超出最右边
-            }elseif($length < 0){
+            } elseif ($length < 0) {
                 $strLen = mb_strlen($text);
                 $end = $strLen + $start;//计算偏移的结尾值
                 $offset = abs($start + $length) - 1;//计算偏移量，由于都是负数就加起来
                 $start = $strLen - $offset;//计算起点值
                 $start = $start >= 0 ? $start : 0;
                 $count = $end - $start + 1;
-            }else {
+            } else {
                 $strLen = mb_strlen($text);
                 $count = $strLen + $start + 1;//计算需要偏移的长度
                 $start = 0;
@@ -156,7 +158,7 @@ final class StringPie
     /**
      * 文本替换 (支持中文)
      * @doc https://www.php.net/manual/en/function.substr-replace.php
-     * 
+     *
      * @param string $string
      * @param string $replacement 替换的文案
      * @param int $start 开始位置
@@ -166,22 +168,22 @@ final class StringPie
      */
     public static function mbSubstrReplace($string, $replacement, $start, $length = null, $encoding = null)
     {
-        if (extension_loaded('mbstring') === true){
+        if (extension_loaded('mbstring') === true) {
             $string_length = (is_null($encoding) === true) ? mb_strlen($string) : mb_strlen($string, $encoding);
-            if ($start < 0){
+            if ($start < 0) {
                 $start = max(0, $string_length + $start);
-            }else if ($start > $string_length){
+            } elseif ($start > $string_length) {
                 $start = $string_length;
             }
-            if ($length < 0){
+            if ($length < 0) {
                 $length = max(0, $string_length - $start + $length);
-            }else if ((is_null($length) === true) || ($length > $string_length)){
+            } elseif ((is_null($length) === true) || ($length > $string_length)) {
                 $length = $string_length;
             }
-            if (($start + $length) > $string_length){
+            if (($start + $length) > $string_length) {
                 $length = $string_length - $start;
             }
-            if (is_null($encoding) === true){
+            if (is_null($encoding) === true) {
                 return mb_substr($string, 0, $start) . $replacement . mb_substr($string, $start + $length, $string_length - $start - $length);
             }
             return mb_substr($string, 0, $start, $encoding) . $replacement . mb_substr($string, $start + $length, $string_length - $start - $length, $encoding);
@@ -216,4 +218,24 @@ final class StringPie
         return LRS::naiveLRS($text);
     }
 
+    /**
+     * 将markdown转为html
+     * @doc https://github.com/erusev/parsedown
+     *
+     * @param string $mdText
+     * @param bool $escapedHTML 过滤HTML标签，非xss安全
+     * @return string
+     */
+    public static function md2html(string $mdText, bool $escapedHTML=false)
+    {
+        if (empty($mdText)) {
+            return '';
+        }
+        $Parsedown = new Parsedown();
+        $Parsedown->setSafeMode(true);
+        if ($escapedHTML) {
+            $Parsedown->setMarkupEscaped(true);
+        }
+        return $Parsedown->text($mdText);
+    }
 }
