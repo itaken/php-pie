@@ -1,6 +1,6 @@
 <?php
 
-namespace ItakenPHPie\other\lib;
+namespace ItakenPHPie\other\lib\zebra;
 
 /**
  *  Methods used with the {@link resize()} method.

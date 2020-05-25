@@ -1,6 +1,6 @@
 <?php
 
-namespace ItakenPHPie\html\lib;
+namespace ItakenPHPie\html\lib\snoopy;
 
 /* * ***********************************************
 

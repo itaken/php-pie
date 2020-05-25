@@ -1,5 +1,7 @@
 <?php
 
+namespace ItakenPHPie\image\lib\cache;
+
 /**
  * The primary class file for PHP Image Compressor & Caching
  *

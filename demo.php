@@ -145,6 +145,9 @@ HTML;
 // $res = TimePie::getMsTimestamp();
 // $res = HiddenPie::phoneHide('13800138000');
 // $res = StringPie::md2html(file_get_contents('README.md'));
+// $res = XmlPie::rssFile2array('rss.xml');
+
+
 
 
 p($res);

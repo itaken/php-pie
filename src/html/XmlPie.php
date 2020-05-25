@@ -2,6 +2,8 @@
 
 namespace ItakenPHPie\html;
 
+include('lib/xml/Opml.php');
+
 /**
  * XML
  *
@@ -85,6 +87,20 @@ final class XmlPie
         // 编码对象后，再解码即可得到数组
         $arr = json_decode(json_encode($obj), true);
         return $arr ?: [];
+    }
+
+    /**
+     * RSS XML文件 转为数组
+     * 
+     * @param string $file RSS xml文件
+     * @return array
+     */
+    public static function rssFile2array($file)
+    {
+        if(empty($file) || !file_exists($file)){
+            return '';
+        }
+        return \ItakenPHPie\html\lib\xml\libopml_parse_file($file);
     }
 
 }
