@@ -2,10 +2,12 @@
 
 namespace ItakenPHPie\encrypt;
 
-include('lib/IntConvert.class.php');
 include('lib/XXTea.class.php');
+include('lib/IntConvert.class.php');
+include('lib/IntEncode.class.php');
 
 use ItakenPHPie\encrypt\lib\IntConvert;
+use ItakenPHPie\encrypt\lib\IntEncode;
 use ItakenPHPie\encrypt\lib\XXTea;
 
 /**
@@ -19,7 +21,7 @@ final class EncryptPie
     /**
      * @var string 加解密-密钥
      */
-    private static $itakenKey = 'itaken@github';
+    const ITAKEN_KEY = 'itaken@github';
  
     /**
      * openssl数据加密
@@ -29,7 +31,7 @@ final class EncryptPie
      */
     public static function opensslEncrypt($data)
     {
-        return \openssl_encrypt($data, 'AES-128-ECB', self::$itakenKey);
+        return \openssl_encrypt($data, 'AES-128-ECB', self::ITAKEN_KEY);
     }
 
     /**
@@ -40,7 +42,7 @@ final class EncryptPie
      */
     public static function opensslDecrypt($data)
     {
-        return \openssl_decrypt($data, 'AES-128-ECB', self::$itakenKey);
+        return \openssl_decrypt($data, 'AES-128-ECB', self::ITAKEN_KEY);
     }
 
     /**
@@ -57,7 +59,7 @@ final class EncryptPie
             return false;
         }
         $operation = strtoupper($operation);  // 转为大写
-        $key = $key ? md5($key) : md5(self::$itakenKey);
+        $key = $key ? md5($key) : md5(self::ITAKEN_KEY);
         $keyLen = strlen($key);
         $string = $operation == 'DECODE' ? base64_decode($string) : substr(md5($string . $key), 0, 8) . $string;
         $stringLen = strlen($string);
@@ -103,7 +105,7 @@ final class EncryptPie
         if (empty($txtStream)) {
             return false;
         }
-        $password = $password ?: md5(self::$itakenKey);
+        $password = $password ?: md5(self::ITAKEN_KEY);
         //密锁串，不能出现重复字符，内有A-Z,a-z,0-9,/,=,+,_,
         $lockStream = 'st=lDEFABCNOPyzghi_jQRST-UwxkVWXYZabcdef+IJK6/7nopqr89LMmGH012345uv';
         //随机找一个数字，并从密锁串中找到一个密锁值
@@ -136,7 +138,7 @@ final class EncryptPie
         if (empty($txtStream)) {
             return false;
         }
-        $password = $password ?: md5(self::$itakenKey);
+        $password = $password ?: md5(self::ITAKEN_KEY);
         //密锁串，不能出现重复字符，内有A-Z,a-z,0-9,/,=,+,_,
         $lockStream = 'st=lDEFABCNOPyzghi_jQRST-UwxkVWXYZabcdef+IJK6/7nopqr89LMmGH012345uv';
         $lockLen = strlen($lockStream);
@@ -175,7 +177,7 @@ final class EncryptPie
     public static function xorEncrypt($string, $key = '')
     {
         $string = base64_encode(trim($string));
-        $key = md5($key ?: self::$itakenKey);
+        $key = md5($key ?: self::ITAKEN_KEY);
         $str_len = strlen($string);
         $key_len = strlen($key);
         for ($i = 0; $i < $str_len; $i++) {
@@ -201,7 +203,7 @@ final class EncryptPie
         if (empty($string)) {
             return false;
         }
-        $key = md5($key ?: self::$itakenKey);
+        $key = md5($key ?: self::ITAKEN_KEY);
         $str_len = strlen($string);
         $key_len = strlen($key);
         for ($i = 0; $i < $str_len; $i++) {
@@ -241,7 +243,7 @@ final class EncryptPie
      * @param string $key
      * @return string
      */
-    public static function xxTeaEncode($string, $key = XXTea::ITAKEN_KEY)
+    public static function xxTeaEncode($string, $key = self::ITAKEN_KEY)
     {
         return (new XXTea)->encrypt($string, $key);
     }
@@ -253,8 +255,32 @@ final class EncryptPie
      * @param string $key
      * @return string
      */
-    public static function xxTeaDecode($string, $key = XXTea::ITAKEN_KEY)
+    public static function xxTeaDecode($string, $key = self::ITAKEN_KEY)
     {
         return (new XXTea)->decrypt($string, $key);
+    }
+
+    /**
+     * int 加密
+     *
+     * @param int $num
+     * @param string $key
+     * @return string
+     */
+    public static function intEncode($num, $key = '3.1415926')
+    {
+        return IntEncode::encode($num, $key);
+    }
+
+    /**
+     * int 解密
+     *
+     * @param string $string
+     * @param string $key
+     * @return string
+     */
+    public static function intDecode($string)
+    {
+        return IntEncode::decode($string);
     }
 }

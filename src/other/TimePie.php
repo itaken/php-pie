@@ -223,4 +223,84 @@ final class TimePie
         $difference = round($difference);
         return "{$difference} {$periods[$j]}{$tense}";
     }
+
+    /**
+     * 获取 时间区间
+     *
+     * @param string $interval 区间 ( TD今日 YD昨日 W本周 LW上周 M本月 LM上月 Q本季 LQ上季 Y今年 LY去年 )
+     * @param boolean $format 格式化 ( 例如: 2014-3-8 01:56:25 )
+     * @return array
+     */
+    public static function getTimeInterval($interval, $format = true)
+    {
+        $start = $end = null;
+        switch (strtoupper($interval)) {
+            case 'TD':  // 本日
+                $td = date('Y-m-d');
+                $start = $td . ' 00:00:00';
+                $end = $td . ' 23:59:59';
+    //			$start = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+    //			$end = mktime(23, 59, 59, date('m'), date('d'), date('Y'));
+                break;
+            case 'YD':  // 昨日
+                $yd = date('Y-m-d', strtotime('-1 day'));
+                $start = $yd . ' 00:00:00';
+                $end = $yd . ' 23:59:59';
+                break;
+            case 'W': // 本周
+                $w = date('w');  // 本周的第几天
+                $start = date('Y-m-d', strtotime(-$w . ' day')) . ' 00:00:00';
+                $end = date('Y-m-d', strtotime((6 - $w) . ' day')) . ' 23:59:59';
+                break;
+            case 'LW':  // 上周
+                $w = date('w') + 7;
+                $start = date('Y-m-d', strtotime(-$w . ' day')) . ' 00:00:00';
+                $end = date('Y-m-d', strtotime((6 - $w) . ' day')) . ' 23:59:59';
+                break;
+            case 'M': // 本月
+                $m = date('Y-m');
+                $start = $m . '-01 00:00:00';
+                $end = $m . '-' . date('t') . ' 23:59:59';
+                break;
+            case 'LM':  // 上月
+                $j = date('j');  // 月份第几天
+                $start = date('Y-m', strtotime('-1 month')) . '-01 00:00:00';
+                $end = date('Y-m-d', strtotime(-$j . ' day')) . ' 23:59:59';
+                break;
+            case 'Q':  // 本季度
+                $n = date('n');  // 当前月份
+                $qm = date('Y-m', strtotime(+($n % 3) . ' month'));  // 季度最后一月
+                $start = date('Y') . '-' . (ceil($n / 3) * 3 - 3 + 1) . '-01 00:00:00';
+                $end = $qm . '-' . date('t', strtotime($qm)) . ' 23:59:59';
+    //			$start = date('Y-m-d H:i:s', mktime(0, 0, 0, $season * 3 - 3 + 1, 1, date('Y')));
+    //			$end = date('Y-m-d H:i:s', mktime(23, 59, 59, $season * 3, date('t', mktime(0, 0, 0, $season * 3, 1, date('Y'))), date('Y')));
+                break;
+            case 'LQ': // 上一季度
+                $n = date('n');  // 当前月份
+                $lqm = date('Y-m', strtotime(($n % 3) - 3 . ' month'));  // 上季度最后一月
+                $start = date('Y-m', strtotime((ceil($n / 3) * 3 - 3 + 1 - 3 - 3) . ' month')) . '-01 00:00:00';
+                $end = $lqm . '-' . date('t', strtotime($lqm)) . ' 23:59:59';
+                break;
+            case 'Y':  // 今年
+                $y = date('Y');
+                $start = $y . '-01-01 00:00:00';
+                $end = $y . '-12-31 23:59:59';
+                break;
+            case 'LY': // 去年
+                $y = date('Y') - 1;
+                $start = $y . '-01-01 00:00:00';
+                $end = $y . '-12-31 23:59:59';
+                break;
+            default:
+                return [];
+        }
+        if (!$format) {
+            $start = strtotime($start);
+            $end = strtotime($end);
+        }
+        return array(
+            'start' => $start,
+            'end' => $end
+        );
+    }
 }

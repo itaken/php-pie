@@ -18,25 +18,25 @@ final class XXTea
     /**
      * 加密
      *
-     * @param string $s
+     * @param string $str
      * @param string $key
      * @return string
      */
-    public function encrypt($s, $key=self::ITAKEN_KEY)
+    public function encrypt($str, $key=self::ITAKEN_KEY)
     {
-        return str_replace(array('+','/','='), array('-','_','.'), base64_encode($this->xxtea_encrypt($s, $key)));
+        return str_replace(array('+','/','='), array('-','_','.'), base64_encode($this->xxtea_encrypt($str, $key)));
     }
 
     /**
      * 解密
      *
-     * @param string $e
+     * @param string $en_str
      * @param string $key
      * @return string
      */
-    public function decrypt($e, $key=self::ITAKEN_KEY)
+    public function decrypt($en_str, $key=self::ITAKEN_KEY)
     {
-        return $this->xxtea_decrypt(base64_decode(str_replace(array('-','_','.'), array('+','/','='), $e)), $key);
+        return $this->xxtea_decrypt(base64_decode(str_replace(array('-','_','.'), array('+','/','='), $en_str)), $key);
     }
 
     private function long2str($v, $w)
@@ -50,23 +50,23 @@ final class XXTea
             }
             $n = $m;
         }
-        $s = array();
+        $str = array();
         for ($i = 0; $i < $len; $i++) {
-            $s[$i] = pack("V", $v[$i]);
+            $str[$i] = pack("V", $v[$i]);
         }
         if ($w) {
-            return substr(join('', $s), 0, $n);
+            return substr(join('', $str), 0, $n);
         } else {
-            return join('', $s);
+            return join('', $str);
         }
     }
 
-    private function str2long($s, $w)
+    private function str2long($str, $w)
     {
-        $v = unpack("V*", $s. str_repeat("\0", (4 - strlen($s) % 4) & 3));
+        $v = unpack("V*", $str. str_repeat("\0", (4 - strlen($str) % 4) & 3));
         $v = array_values($v);
         if ($w) {
-            $v[count($v)] = strlen($s);
+            $v[count($v)] = strlen($str);
         }
         return $v;
     }
@@ -103,14 +103,14 @@ final class XXTea
         
         while (0 < $q--) {
             $sum = $this->int32($sum + $delta);
-            $e = $sum >> 2 & 3;
+            $en_str = $sum >> 2 & 3;
             for ($p = 0; $p < $n; $p++) {
                 $y = $v[$p + 1];
-                $mx = $this->int32((($z >> 5 & 0x07ffffff) ^ $y << 2) + (($y >> 3 & 0x1fffffff) ^ $z << 4)) ^ $this->int32(($sum ^ $y) + ($k[$p & 3 ^ $e] ^ $z));
+                $mx = $this->int32((($z >> 5 & 0x07ffffff) ^ $y << 2) + (($y >> 3 & 0x1fffffff) ^ $z << 4)) ^ $this->int32(($sum ^ $y) + ($k[$p & 3 ^ $en_str] ^ $z));
                 $z = $v[$p] = $this->int32($v[$p] + $mx);
             }
             $y = $v[0];
-            $mx = $this->int32((($z >> 5 & 0x07ffffff) ^ $y << 2) + (($y >> 3 & 0x1fffffff) ^ $z << 4)) ^ $this->int32(($sum ^ $y) + ($k[$p & 3 ^ $e] ^ $z));
+            $mx = $this->int32((($z >> 5 & 0x07ffffff) ^ $y << 2) + (($y >> 3 & 0x1fffffff) ^ $z << 4)) ^ $this->int32(($sum ^ $y) + ($k[$p & 3 ^ $en_str] ^ $z));
             $z = $v[$n] = $this->int32($v[$n] + $mx);
         }
         return $this->long2str($v, false);
@@ -137,14 +137,14 @@ final class XXTea
         $sum = $this->int32($q * $delta);
         
         while ($sum != 0) {
-            $e = $sum >> 2 & 3;
+            $en_str = $sum >> 2 & 3;
             for ($p = $n; $p > 0; $p--) {
                 $z = $v[$p - 1];
-                $mx = $this->int32((($z >> 5 & 0x07ffffff) ^ $y << 2) + (($y >> 3 & 0x1fffffff) ^ $z << 4)) ^ $this->int32(($sum ^ $y) + ($k[$p & 3 ^ $e] ^ $z));
+                $mx = $this->int32((($z >> 5 & 0x07ffffff) ^ $y << 2) + (($y >> 3 & 0x1fffffff) ^ $z << 4)) ^ $this->int32(($sum ^ $y) + ($k[$p & 3 ^ $en_str] ^ $z));
                 $y = $v[$p] = $this->int32($v[$p] - $mx);
             }
             $z = $v[$n];
-            $mx = $this->int32((($z >> 5 & 0x07ffffff) ^ $y << 2) + (($y >> 3 & 0x1fffffff) ^ $z << 4)) ^ $this->int32(($sum ^ $y) + ($k[$p & 3 ^ $e] ^ $z));
+            $mx = $this->int32((($z >> 5 & 0x07ffffff) ^ $y << 2) + (($y >> 3 & 0x1fffffff) ^ $z << 4)) ^ $this->int32(($sum ^ $y) + ($k[$p & 3 ^ $en_str] ^ $z));
             $y = $v[0] = $this->int32($v[0] - $mx);
             $sum = $this->int32($sum - $delta);
         }

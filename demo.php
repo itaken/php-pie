@@ -54,6 +54,8 @@ use ItakenPHPie\encrypt\EncryptPie;
 use ItakenPHPie\file\FileDetectPie;
 use ItakenPHPie\browser\TerminalPie;
 use ItakenPHPie\encrypt\HiddenPie;
+use ItakenPHPie\encrypt\lib\IntConvert;
+use ItakenPHPie\encrypt\lib\IntEncode;
 use ItakenPHPie\encrypt\PasswordPie;
 use ItakenPHPie\file\FileThroughPie;
 use ItakenPHPie\file\SectionPie;
@@ -73,27 +75,28 @@ use ItakenPHPie\text\StringPie;
 // $res = PinyinPie::toPinyin('中华人民共和国');
 // echo $str = EncryptPie::strEncrypt('同一个世界,同一个梦想', '奥运');
 // $res = EncryptPie::strDecrypt($str, '奥运');
-// echo $str = EncryptPie::int2string(234523);
+// $res = IntConvert::randomKey();
+// echo $str = EncryptPie::int2string(123456);
 // $res = EncryptPie::string2int($str);
 // $res = FileThroughPie::scanDirList(__DIR__ . '/src');
 // $res = FileThroughPie::openDirList(__DIR__ . '/src');
 // $res = FileThroughPie::recursiveDirList(__DIR__ . '/src');
 // $res = FileDetectPie::detectFileRealExt(__DIR__ . '/composer.json');
-$html=<<<HTML
-<div class="clearfix">
-    <a href="javascript:void(0);" class="select-from">
-        <span style="background-color:#666;font-size:22px">
-            <span data-lang="auto">自动检测</span>
-            <i class="arrow"></i>
-        </span>
-    </a>
-    <a href="javascript:void(0);" class="btn-disable">
-        <span class="exchange">文本</span>
-    </a>
-    <a href="javascript:void(0);" class="btn-zh" id="button" target="_self">按钮</a>
-    <a href="javascript:">链接</a>
-</div>
-HTML;
+// $html=<<<HTML
+// <div class="clearfix">
+//     <a href="javascript:void(0);" class="select-from">
+//         <span style="background-color:#666;font-size:22px">
+//             <span data-lang="auto">自动检测</span>
+//             <i class="arrow"></i>
+//         </span>
+//     </a>
+//     <a href="javascript:void(0);" class="btn-disable">
+//         <span class="exchange">文本</span>
+//     </a>
+//     <a href="javascript:void(0);" class="btn-zh" id="button" target="_self">按钮</a>
+//     <a href="javascript:">链接</a>
+// </div>
+// HTML;
 // $res = HtmlConvertPie::ubbEncode($html);
 // $res = OutputPie::jsonEcho(['abc' => 111]);
 // $res = OutputPie::jsonOutput(['abc' => 111]);
@@ -114,27 +117,27 @@ HTML;
 // $res = ClientPie::getSoapResult('https://localhost/test.asmx?wsdl', []);
 // $res = ClientPie::getClientInfo();
 // $dataArray = [
-// 	[
-// 		'title' => 'title1',
-// 		'content' => 'content1',
-// 		'pubdate' => '2009-10-11',
-// 	],
-// 	[
-// 		'title' => 'title2',
-// 		'content' => 'content2',
-// 		'pubdate' => '2009-11-11',
+//     [
+//         'title' => 'title1',
+//         'content' => 'content1',
+//         'pubdate' => '2009-10-11',
+//     ],
+//     [
+//         'title' => 'title2',
+//         'content' => 'content2',
+//         'pubdate' => '2009-11-11',
 //     ]
 // ];
 // // 属性数组
 // $attributeArray = [
-// 	'title' => [
-// 		'size' => 1
+//     'title' => [
+//         'size' => 1
 //     ],
 // ];
 // $res = XmlPie::xmlWriter($dataArray, $attributeArray);
 // $res = XmlPie::xml2array($res);
-// $dom = XmlPie::parseDom('<books><book><title>Great American Novel</title></book></books>');
-// $res = $dom->book[0]->title; // Great American Novel
+// $dom = XmlPie::parseDom('<books><book><title>Just Novel</title></book></books>');
+// $res = $dom->book[0]->title; // Just Novel
 // $res = ClientPie::getMemoryUsageImplement();
 // $res = IpPie::analysisIpInfoByGeo('103.84.139.98');
 // $res = StringPie::calculateText('我只是测试我just测试');
@@ -150,6 +153,9 @@ HTML;
 // $res = SectionPie::removeComments('autoload.php');
 // echo $en = EncryptPie::xxTeaEncode('中国');
 // $res = EncryptPie::xxTeaDecode($en);
+// $res = StringPie::uniqidString(6);
+echo $en = EncryptPie::intEncode(123456, 3.14);
+$res = EncryptPie::intDecode($en);
 
 
 p($res);

@@ -13,9 +13,9 @@ final class IntConvert
 {
 
     /**
-     * @var array KeyMap 在初始时，建议重新生成一下
+     * @var array 在初始时，建议重新生成一下
      */
-    private static $keyMap = [
+    const CONVERT_MAP = [
         'LOXB3V64IGUEYCQF8A72WKSHN915RDZM',
         'DZ7O3VMWHB85CELGI6XQYSRA9N4K1FU2',
         'BZNS6WAG83IDK5M2OCUEF4RLQV917HYX',
@@ -42,7 +42,7 @@ final class IntConvert
      */
     private static function getKeyMap($hash = 'A')
     {
-        return self::$keyMap[hexdec($hash)];
+        return self::CONVERT_MAP[hexdec($hash)];
     }
 
     /**
@@ -79,11 +79,11 @@ final class IntConvert
     public static function randomKey()
     {
         header('content-type: text/text; charset=utf-8');
-        echo "	#请复制到 IntConvert 头部\n";
-        echo "	static private $" . "keyMap = [\n";
+        echo "  # 请复制到 IntConvert 头部\n";
+        echo "  const CONVERT_MAP = [\n";
 
         for ($i = 0; $i < 16; $i++) {
-            $keys = self::$keyMap[0];
+            $keys = self::CONVERT_MAP[0];
             $keys_new = '';
             $word = '';
 
@@ -94,9 +94,9 @@ final class IntConvert
                 $keys_new .= $word;
                 $len = strlen($keys);
             }
-            echo "		'$keys_new',\n";
+            echo "      '$keys_new',\n";
         }
-        echo "	];\n";
+        echo "  ];\n";
         die();
     }
 
