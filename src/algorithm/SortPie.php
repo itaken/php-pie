@@ -30,8 +30,8 @@ final class SortPie
                     $y[] = $arr[$i];
                 }
             }
-            $x = quickSort($x);
-            $y = quickSort($y);
+            $x = self::quickSort($x);
+            $y = self::quickSort($y);
             return array_merge($x, array($k), $y);
         } else {
             return$arr;

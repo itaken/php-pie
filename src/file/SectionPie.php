@@ -2,6 +2,10 @@
 
 namespace ItakenPHPie\file;
 
+include('lib/RemoveComments.class.php');
+
+use ItakenPHPie\file\lib\RemoveComments;
+
 /**
  * 文件操作
  *
@@ -74,4 +78,15 @@ final class SectionPie
         return ['total' => $line, 'list' => $log];
     }
 
+    /**
+     * 移除文件注释
+     * 
+     * @param string $path 文件或目录
+     * @param string $saveFolder 保存的目录
+     * @return bool
+     */
+    public static function removeComments($path, $saveFolder=null)
+    {
+        return (new RemoveComments($path, $saveFolder))->do_remove();
+    }
 }

@@ -56,6 +56,7 @@ use ItakenPHPie\browser\TerminalPie;
 use ItakenPHPie\encrypt\HiddenPie;
 use ItakenPHPie\encrypt\PasswordPie;
 use ItakenPHPie\file\FileThroughPie;
+use ItakenPHPie\file\SectionPie;
 use ItakenPHPie\html\XmlPie;
 use ItakenPHPie\html\HtmlConvertPie;
 use ItakenPHPie\text\FilterPie;
@@ -146,7 +147,7 @@ HTML;
 // $res = HiddenPie::phoneHide('13800138000');
 // $res = StringPie::md2html(file_get_contents('README.md'));
 // $res = XmlPie::rssFile2array('rss.xml');
-
+// $res = SectionPie::removeComments('autoload.php');
 
 
 

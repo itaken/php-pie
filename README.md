@@ -1,4 +1,4 @@
-# :new_moon_with_face: 自用**PHP**代码片段
+# :new_moon_with_face: 常用**PHP**代码片段
 
 # 开发规范
 
@@ -13,10 +13,11 @@
 
 # 目的
 
-- [x] :shipit: 自用的PHP片段
-- [x] 主要方便 **自己** 查看使用
+- [x] :shipit: 常用的PHP片段
+- [x] 主要方便 **个人** 查看使用
+- [x] 代码备份
 
-> 更多内容,可以访问[:rocket: 个人github pages](https://itaken.github.io)
+> 更多内容,可以访问[:rocket: ITAKEN GITHUB PAGES](https://itaken.github.io)
 
 # 引入
 
