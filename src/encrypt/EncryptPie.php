@@ -3,8 +3,10 @@
 namespace ItakenPHPie\encrypt;
 
 include('lib/IntConvert.class.php');
+include('lib/XXTea.class.php');
 
 use ItakenPHPie\encrypt\lib\IntConvert;
+use ItakenPHPie\encrypt\lib\XXTea;
 
 /**
  * 一些 加密工具
@@ -230,5 +232,29 @@ final class EncryptPie
     public static function string2int($str = '')
     {
         return IntConvert::toInt($str);
+    }
+
+    /**
+     * XXTea 加密
+     *
+     * @param string $string
+     * @param string $key
+     * @return string
+     */
+    public static function xxTeaEncode($string, $key = XXTea::ITAKEN_KEY)
+    {
+        return (new XXTea)->encrypt($string, $key);
+    }
+
+    /**
+     * XXTea 解密
+     *
+     * @param string $string
+     * @param string $key
+     * @return string
+     */
+    public static function xxTeaDecode($string, $key = XXTea::ITAKEN_KEY)
+    {
+        return (new XXTea)->decrypt($string, $key);
     }
 }

@@ -50,7 +50,7 @@ class RemoveComments
      * 选择 需要处理的源
      *
      * @param string $file_or_folder
-     * @return boolean
+     * @return object
      */
     public function select_original($file_or_folder)
     {
@@ -76,7 +76,7 @@ class RemoveComments
     }
 
     /**
-     * (循环)创建文件夹
+     * 创建文件夹
      *
      * @param string $dir
      * @param int $mode
@@ -155,12 +155,12 @@ class RemoveComments
         $new_path = $new_path ?: $this->save_folder;
         $contents = $this->remove_file_comments($file);  // 去除注释
         if (empty($contents)) {
+            $this->fail_arr[] = $file;
             return false;
         }
         $new_file = str_replace('//', '/', $new_path . '/' . 'compressed-' . basename($file));
         try {
-            // 写入文件
-            file_put_contents($new_file, $contents, LOCK_EX);
+            file_put_contents($new_file, $contents, LOCK_EX); // 写入文件
         } catch (\Exception $e) {
             $this->fail_arr[] = $file;
             return false;
@@ -194,6 +194,7 @@ class RemoveComments
                 if (empty($_file)) {
                     continue;
                 }
+                // 处理文件
                 $this->opt_file_rc($_file, $new_path);
             }
         }

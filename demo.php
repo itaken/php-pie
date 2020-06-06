@@ -148,7 +148,8 @@ HTML;
 // $res = StringPie::md2html(file_get_contents('README.md'));
 // $res = XmlPie::rssFile2array('rss.xml');
 // $res = SectionPie::removeComments('autoload.php');
-
+// echo $en = EncryptPie::xxTeaEncode('中国');
+// $res = EncryptPie::xxTeaDecode($en);
 
 
 p($res);
