@@ -1,6 +1,6 @@
 <?php
 
-namespace ItakenPHPie\html\lib\ThinkPHP;
+namespace ItakenPHPie\html\lib\thinkphp;
 
 /**
  * 模板处理

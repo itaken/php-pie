@@ -9,7 +9,7 @@ namespace ItakenPHPie\other;
  * @since 2020-05-10
  */
 final class TimePie
-{
+{   
     /**
      * 输出 GMT时间格式
      *
@@ -18,6 +18,15 @@ final class TimePie
     public static function getGMTTime(): string
     {
         return gmdate('l d F Y H:i:s', time() + 60) . ' GMT';
+    }
+
+    /**
+	 * 获取微秒时间
+	 * 
+	 * @return float
+	 */
+	public static function getMsTime() {
+		return number_format(microtime(TRUE), 6, '.', '');
     }
 
     /**

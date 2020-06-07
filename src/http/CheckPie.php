@@ -3,6 +3,7 @@
 namespace ItakenPHPie\http;
 
 use ItakenPHPie\http\CurlPie;
+use ItakenPHPie\http\HttpPie;
 
 /**
  * 校验
@@ -19,7 +20,7 @@ final class CheckPie
      */
     public static function isGet()
     {
-        return (filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'GET') ? true : false;
+        return HttpPie::isGet();
     }
 
     /**
@@ -29,7 +30,7 @@ final class CheckPie
      */
     public static function isPost()
     {
-        return (filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'POST') ? true : false;
+        return HttpPie::isPost();
     }
 
     /**
@@ -41,6 +42,16 @@ final class CheckPie
     public static function isUrl($url)
     {
         return CurlPie::isUrl($url);
+    }
+
+    /**
+     * 判断是否HTTPS
+     *
+     * @return boolean -true 是https
+     */
+    public static function isHttps()
+    {
+        return HttpPie::isHttps();
     }
 
     /**

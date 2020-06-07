@@ -97,4 +97,21 @@ final class SecurityPie
 		return str_replace(array("\'","\"","'",'"'), array("&#39;","&quot;","&#39;","&quot;"), $str);
     }
 
+    /**
+     * 请求判断
+     * 
+     * @param mixed $input
+     * @return mixed
+     */
+    public static function attackCheck($input)
+    {
+        $inputCheck = is_array($input) ? implode($input) : $input;
+        // post 过滤规则 来自 360safe
+        $postFilter = "\\b(and|or)\\b.{1,6}?(=|>|<|\\bin\\b|\\blike\\b)|\\/\\*.+?\\*\\/|<\\s*script\\b|\\bEXEC\\b|UNION.+?SELECT|UPDATE.+?SET|INSERT\\s+INTO.+?VALUES|(SELECT|DELETE).+?FROM|(CREATE|ALTER|DROP|TRUNCATE)\\s+(TABLE|DATABASE)";
+		if (preg_match("/" . $postFilter . "/is", $inputCheck)) {
+            throw new \InvalidArgumentException('Illegal argument!');
+        }
+        return $input;
+    }
+
 }
