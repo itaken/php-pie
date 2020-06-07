@@ -166,9 +166,9 @@ final class TagPie
      */
     public static function entitiesToAscii($str, $all = true)
     {
-        if (preg_match_all('/\&#(\d+)\;/', $str, $matches)) {
-            for ($i = 0, $s = count($matches['0']); $i < $s; $i++) {
-                $digits = $matches['1'][$i];
+        if (preg_match_all('/\&#(\d+)\;/', $str, $matched)) {
+            for ($i = 0, $s = count($matched['0']); $i < $s; $i++) {
+                $digits = $matched['1'][$i];
                 $out = '';
                 if ($digits < 128) {
                     $out .= chr($digits);
@@ -180,7 +180,7 @@ final class TagPie
                     $out .= chr(128 + ((($digits % 4096) - ($digits % 64)) / 64));
                     $out .= chr(128 + ($digits % 64));
                 }
-                $str = str_replace($matches['0'][$i], $out, $str);
+                $str = str_replace($matched['0'][$i], $out, $str);
             }
         }
         if ($all) {
@@ -194,52 +194,112 @@ final class TagPie
     }
 
     /**
-     * 自动添加链接
-     * 
+     * Auto-linker 自动添加链接 (from CodeIgniter)
+     *
      * @param string $str
-     * @param string $type
+     * @param string $type 类型：both,email,url
      * @param bool $popup
      * @return string
      */
-    public function autoLink($str, $type = 'both', $popup = false)
+    public static function autoLink($str, $type = 'both', $popup = false)
     {
         if ($type != 'email') {
-            if (preg_match_all("#(^|\s|\()((http(s?)://)|(www\.))(\w+[^\s\)\<]+)#i", $str, $matches)) {
+            if (preg_match_all("#(^|\s|\()((http(s?)://)|(www\.))(\w+[^\s\)\<]+)#i", $str, $matched)) {
                 $pop = ($popup == true) ? " target=\"_blank\" " : "";
-                for ($i = 0; $i < count($matches['0']); $i++) {
+                for ($i = 0; $i < count($matched['0']); $i++) {
                     $period = '';
-                    if (preg_match("|\.$|", $matches['6'][$i])) {
+                    if (preg_match("|\.$|", $matched['6'][$i])) {
                         $period = '.';
-                        $matches['6'][$i] = substr($matches['6'][$i], 0, -1);
+                        $matched['6'][$i] = substr($matched['6'][$i], 0, -1);
                     }
-                    $str = str_replace(
-                        $matches['0'][$i],
-                        $matches['1'][$i].'<a href="http'.
-                                        $matches['4'][$i].'://'.
-                                        $matches['5'][$i].
-                                        $matches['6'][$i].'"'.$pop.'>http'.
-                                        $matches['4'][$i].'://'.
-                                        $matches['5'][$i].
-                                        $matches['6'][$i].'</a>'.
-                                        $period,
-                        $str
-                    );
+                    $replace = $matched['1'][$i].'<a href="http'.$matched['4'][$i].'://'.$matched['5'][$i].$matched['6'][$i].'"'.$pop.'>http'.$matched['4'][$i].'://'.$matched['5'][$i].$matched['6'][$i].'</a>'.$period;
+                    $str = str_replace($matched['0'][$i], $replace, $str);
                 }
             }
         }
         if ($type != 'url') {
-            if (preg_match_all("/([a-zA-Z0-9_\.\-\+]+)@([a-zA-Z0-9\-]+)\.([a-zA-Z0-9\-\.]*)/i", $str, $matches)) {
-                for ($i = 0; $i < count($matches['0']); $i++) {
+            if (preg_match_all("/([a-zA-Z0-9_\.\-\+]+)@([a-zA-Z0-9\-]+)\.([a-zA-Z0-9\-\.]*)/i", $str, $matched)) {
+                for ($i = 0; $i < count($matched['0']); $i++) {
                     $period = '';
-                    if (preg_match("|\.$|", $matches['3'][$i])) {
+                    if (preg_match("|\.$|", $matched['3'][$i])) {
                         $period = '.';
-                        $matches['3'][$i] = substr($matches['3'][$i], 0, -1);
+                        $matched['3'][$i] = substr($matched['3'][$i], 0, -1);
                     }
-
-                    $str = str_replace($matches['0'][$i], safe_mailto($matches['1'][$i].'@'.$matches['2'][$i].'.'.$matches['3'][$i]).$period, $str);
+                    $email = $matched['1'][$i].'@'.$matched['2'][$i].'.'.$matched['3'][$i];
+                    $str = str_replace($matched['0'][$i], self::safeMailto($email) . $period, $str);
                 }
             }
         }
         return $str;
+    }
+
+    /**
+     * Encoded Mailto Link (from CodeIgniter)
+     *
+     * @param string $email      the email address
+     * @param string $title      the link title
+     * @param mixed  $attributes any attributes
+     *
+     * @return string
+     */
+    public static function safeMailto(string $email, string $title = '', $attributes = ''): string
+    {
+        if (trim($title) === '') {
+            $title = $email;
+        }
+        $x = str_split('<a href="mailto:', 1);
+        for ($i = 0, $l = strlen($email); $i < $l; $i ++) {
+            $x[] = '|' . ord($email[$i]);
+        }
+        $x[] = '"';
+        if ($attributes !== '') {
+            if (is_array($attributes)) {
+                foreach ($attributes as $key => $val) {
+                    $x[] = ' ' . $key . '="';
+                    for ($i = 0, $l = strlen($val); $i < $l; $i ++) {
+                        $x[] = '|' . ord($val[$i]);
+                    }
+                    $x[] = '"';
+                }
+            } else {
+                for ($i = 0, $l = mb_strlen($attributes); $i < $l; $i ++) {
+                    $x[] = mb_substr($attributes, $i, 1);
+                }
+            }
+        }
+        $x[] = '>';
+        $temp = [];
+        for ($i = 0, $l = strlen($title); $i < $l; $i ++) {
+            $ordinal = ord($title[$i]);
+            if ($ordinal < 128) {
+                $x[] = '|' . $ordinal;
+            } else {
+                if (empty($temp)) {
+                    $count = ($ordinal < 224) ? 2 : 3;
+                }
+                $temp[] = $ordinal;
+                if (count($temp) === $count) {
+                    $number = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
+                    $x[]    = '|' . $number;
+                    $count  = 1;
+                    $temp   = [];
+                }
+            }
+        }
+
+        $x[] = '<';
+        $x[] = '/';
+        $x[] = 'a';
+        $x[] = '>';
+        $x = \array_reverse($x);
+        $output = '<script type="text/javascript">' . 'var l=new Array();';
+        for ($i = 0, $c = count($x); $i < $c; $i ++) {
+            $output .= 'l[' . $i . "] = '" . $x[$i] . "';";
+        }
+        return $output . ('for (var i = l.length-1; i >= 0; i=i-1) {'
+                . "if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");"
+                . 'else document.write(unescape(l[i]));'
+                . '}'
+                . '</script>');
     }
 }

@@ -26,8 +26,8 @@ final class SecurityPie
         $search .= '1234567890!@#$%^&*()';
         $search .= '~`";:?+/={}[]-_|\'\\';
         for ($i = 0; $i < strlen($search); $i ++) {
-            $html = preg_replace('/(&#[xX]0{0,8}' . dechex(ord($search [$i])) . ';?)/i', $search [$i], $html);
-            $html = preg_replace('/(�{0,8}' . ord($search [$i]) . ';?)/', $search [$i], $html);
+            $html = preg_replace('/(&#[xX]0{0,8}' . dechex(ord($search[$i])) . ';?)/i', $search[$i], $html);
+            $html = preg_replace('/(�{0,8}' . ord($search[$i]) . ';?)/', $search[$i], $html);
         }
         $ra1 = [
             'javascript', 'vbscript', 'expression', 'applet', 'meta', 'xml', 'blink', 'link', 'style', 'script',
@@ -54,7 +54,7 @@ final class SecurityPie
             $html_before = $html;
             for ($i = 0; $i < sizeof($ra); $i ++) {
                 $pattern = '/';
-                for ($j = 0; $j < strlen($ra [$i]); $j ++) {
+                for ($j = 0; $j < strlen($ra[$i]); $j ++) {
                     if ($j > 0) {
                         $pattern .= '(';
                         $pattern .= '(&#[xX]0{0,8}([9ab]);)';
@@ -62,10 +62,10 @@ final class SecurityPie
                         $pattern .= '|(&#{0,8}([9|10|13]);)';
                         $pattern .= ')*';
                     }
-                    $pattern .= $ra [$i] [$j];
+                    $pattern .= $ra[$i] [$j];
                 }
                 $pattern .= '/i';
-                $replacement = substr($ra [$i], 0, 2) . '<x>' . substr($ra [$i], 2);
+                $replacement = substr($ra[$i], 0, 2) . '<x>' . substr($ra[$i], 2);
                 $html = preg_replace($pattern, $replacement, $html);
                 if ($html_before == $html) {
                     $found = false;

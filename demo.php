@@ -160,6 +160,7 @@ use ItakenPHPie\text\StringPie;
 // $res = EncryptPie::discuzDecode($en);
 // echo $en = EncryptPie::strEncrypt('中国');
 // $res = EncryptPie::strDecrypt($en);
+// echo $res = TagPie::autoLink('GITHUB https://github.com/itaken regelhh@gmail.com');
 
 
 p($res);
