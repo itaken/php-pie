@@ -154,8 +154,12 @@ use ItakenPHPie\text\StringPie;
 // echo $en = EncryptPie::xxTeaEncode('中国');
 // $res = EncryptPie::xxTeaDecode($en);
 // $res = StringPie::uniqidString(6);
-echo $en = EncryptPie::intEncode(123456, 3.14);
-$res = EncryptPie::intDecode($en);
+// echo $en = EncryptPie::intEncode(123456, 3.14);
+// $res = EncryptPie::intDecode($en);
+// echo $en = EncryptPie::discuzEncode('中国人民共和国');
+// $res = EncryptPie::discuzDecode($en);
+// echo $en = EncryptPie::strEncrypt('中国');
+// $res = EncryptPie::strDecrypt($en);
 
 
 p($res);

@@ -13,7 +13,7 @@ final class XXTea
     /**
      * @var string 加密key
      */
-    const ITAKEN_KEY = 'itaken-xx:)tea-4@encrypt';
+    const ITAKEN_KEY = '#itaken-xx:)tea-4@_encrypt';
 
     /**
      * 加密

@@ -24,11 +24,11 @@ final class IntEncode
     /**
      * 加密
      *
-     * @param int $nums 整型数值
+     * @param int $num 整型数值
      * @param float $key 密钥
      * @return string
      */
-    public static function encode($nums, $key = 2158.4354154122)
+    public static function encode($num, $key = 2158.4354154122)
     {
         $length = self::ENCODE_LEN;
         $strbase = self::ENCODE_BASE;
@@ -36,12 +36,12 @@ final class IntEncode
         $codenums = substr($strbase, $length, 10);
         $codeext = substr($strbase, $length + 10);
         $rtn = "";
-        $numslen = strlen($nums);
+        $numlen = strlen($num);
         //密文第一位标记数字的长度
-        $begin = substr($codelen, $numslen - 1, 1);
+        $begin = substr($codelen, $numlen - 1, 1);
         //密文的扩展位
-        $extlen = $length - $numslen - 1;
-        $temp = str_replace('.', '', $nums / $key);
+        $extlen = $length - $numlen - 1;
+        $temp = str_replace('.', '', $num / $key);
         $temp = substr($temp, -$extlen);
         $arrextTemp = str_split($codeext);
         $arrext = str_split($temp);
@@ -49,7 +49,7 @@ final class IntEncode
             $rtn .= $arrextTemp[$v];
         }
         $arrnumsTemp = str_split($codenums);
-        $arrnums = str_split($nums);
+        $arrnums = str_split($num);
         foreach ($arrnums as $v) {
             $rtn .= $arrnumsTemp[$v];
         }
