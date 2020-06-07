@@ -1,9 +1,8 @@
 <?php
 
 /**
- * 表情映射
+ * 表情映射 from codeigniter
  * 
- * @modify itaken<regelhh@gmail.com>
  * @since 2020-05-10
  */
 return array(

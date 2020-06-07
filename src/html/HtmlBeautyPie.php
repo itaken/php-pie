@@ -84,7 +84,7 @@ final class HtmlBeautyPie
 
     /**
      * 压缩html : 清除换行符,清除制表符,去掉注释标记
-     * 
+     *
      * @param string $html
      * @return string 压缩后的内容
      */
@@ -97,5 +97,32 @@ final class HtmlBeautyPie
         $pattern = array("/> *([^ ]*) */", "/[\s]+/", "//", "/\" /", "/ \"/", "'/\*[^*]*\*/'");
         $replace = array(">\\1<", " ", "", "\"", "\"", "");
         return preg_replace($pattern, $replace, $html);
+    }
+
+    /**
+     * 代码高亮
+     *
+     * @param string $str
+     * @return string
+     */
+    public static function highlightCode($str)
+    {
+        $str = str_replace(array('&lt;', '&gt;'), array('<', '>'), $str);
+        $str = str_replace(
+            array('<?', '?>', '<%', '%>', '\\', '</script>'),
+            array('phptagopen', 'phptagclose', 'asptagopen', 'asptagclose', 'backslashtmp', 'scriptclose'),
+            $str
+        );
+        $str = '<?php '.$str.' ?>'; // <?
+        $str = highlight_string($str, true);
+        $str = preg_replace('/<span style="color: #([A-Z0-9]+)">&lt;\?php(&nbsp;| )/i', '<span style="color: #$1">', $str);
+        $str = preg_replace('/(<span style="color: #[A-Z0-9]+">.*?)\?&gt;<\/span>\n<\/span>\n<\/code>/is', "$1</span>\n</span>\n</code>", $str);
+        $str = preg_replace('/<span style="color: #[A-Z0-9]+"\><\/span>/i', '', $str);
+        $str = str_replace(
+            array('phptagopen', 'phptagclose', 'asptagopen', 'asptagclose', 'backslashtmp', 'scriptclose'),
+            array('&lt;?', '?&gt;', '&lt;%', '%&gt;', '\\', '&lt;/script&gt;'),
+            $str
+        );
+        return $str;
     }
 }

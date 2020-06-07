@@ -57,4 +57,45 @@ final class StreamPie
         }
         return $ret;
     }
+
+    /**
+     * 上传图片
+     *
+     * @param string $path 保存路径：/path/to/save
+     * @param string $name 文件名：abc.jpg
+     * @return false|array
+     */
+    public static function upload($path, $name = '')
+    {
+        $upload_files = current($_FILES);
+        if (empty($upload_files)) {
+            return false;
+        }
+        if (!is_uploaded_file($upload_files['tmp_name'])) {
+            return false;
+        }
+        $md5 = md5_file($upload_files['tmp_name']);
+        $name = empty($name) ? $md5 . '.jpg' : $name;  // 文件名
+        $file = $path . (strpos($name, '.') < 1 ? $name . '.jpg' : $name); // 保存的文件路径
+        if (file_exists($file)) {
+            return array(
+                'file_name' => $name,
+                'size' => filesize($file),
+                'md5' => $md5,
+                'file' => $file,
+            );
+        }
+        //	$size = $upload_files['size'];  // 文件大小
+        //	$type = $upload_files['type'];  // 文件类型
+        if (!move_uploaded_file($upload_files['tmp_name'], $file)) {
+            return false;
+        }
+        return array(
+            'source_name' => $upload_files['name'],
+            'file_name' => $name,
+            'size' => $upload_files['size'],
+            'md5' => $md5,
+            'file' => $file,
+        );
+    }
 }

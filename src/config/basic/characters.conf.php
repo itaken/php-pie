@@ -1,9 +1,8 @@
 <?php
 
 /**
- * 特殊符号
+ * 特殊符号 from codeigniter
  * 
- * @author itaken<regelhh@gmail.comm>
  * @since 2020-05-10
  */
 return [

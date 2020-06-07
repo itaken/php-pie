@@ -51,7 +51,7 @@ final class OutputPie
         header('Pragma: no-cache');  // 不缓存
         header('Expires: 0');
         echo json_encode($return_arr, JSON_UNESCAPED_UNICODE);
-        // preg_replace('#\":\s*(null|false)#iUs', '":""', );
+        // preg_replace('#\":\s*(null|false)#iUs', '":""', json_encode($return_arr));
         exit();
     }
 

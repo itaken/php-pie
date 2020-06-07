@@ -303,4 +303,52 @@ final class TimePie
             'end' => $end
         );
     }
+
+    /**
+     * 时间 转 GMT
+     *
+     * @param string $dateStr
+     * @return integer
+     */
+    public static function toUnix($dateStr = '')
+    {
+        if ($dateStr == '') {
+            return false;
+        }
+        $dateStr = trim($dateStr);
+        $dateStr = preg_replace("/\040+/", ' ', $dateStr);
+
+        if (! preg_match('/^[0-9]{2,4}\-[0-9]{1,2}\-[0-9]{1,2}\s[0-9]{1,2}:[0-9]{1,2}(?::[0-9]{1,2})?(?:\s[AP]M)?$/i', $dateStr)) {
+            return false;
+        }
+
+        $split = explode(' ', $dateStr);
+
+        $ex = explode("-", $split['0']);
+        $year  = (strlen($ex['0']) == 2) ? '20'.$ex['0'] : $ex['0'];
+        $month = (strlen($ex['1']) == 1) ? '0'.$ex['1']  : $ex['1'];
+        $day   = (strlen($ex['2']) == 1) ? '0'.$ex['2']  : $ex['2'];
+
+        $ex = explode(":", $split['1']);
+        $hour = (strlen($ex['0']) == 1) ? '0'.$ex['0'] : $ex['0'];
+        $min  = (strlen($ex['1']) == 1) ? '0'.$ex['1'] : $ex['1'];
+
+        $sec = '00'; 
+        if (isset($ex['2']) && preg_match('/[0-9]{1,2}/', $ex['2'])) {
+            $sec  = (strlen($ex['2']) == 1) ? '0'.$ex['2'] : $ex['2'];
+        }
+        if (isset($split['2'])) {
+            $ampm = strtolower($split['2']);
+            if (substr($ampm, 0, 1) == 'p' and $hour < 12) {
+                $hour = $hour + 12;
+            }
+            if (substr($ampm, 0, 1) == 'a' and $hour == 12) {
+                $hour =  '00';
+            }
+            if (strlen($hour) == 1) {
+                $hour = '0'.$hour;
+            }
+        }
+        return mktime($hour, $min, $sec, $month, $day, $year);
+    }
 }

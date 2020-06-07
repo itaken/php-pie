@@ -13,6 +13,26 @@ use ItakenPHPie\http\CurlPie;
 final class CheckPie
 {
     /**
+     * 是否 GET 提交
+     * 
+     * @return boolean - true 是
+     */
+    public static function isGet()
+    {
+        return (filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'GET') ? true : false;
+    }
+
+    /**
+     * 是否 POST 提交
+     * 
+     * @return boolean - true 是
+     */
+    public static function isPost()
+    {
+        return (filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'POST') ? true : false;
+    }
+
+    /**
      * 判断是否URL
      *
      * @param string $url
