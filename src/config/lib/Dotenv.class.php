@@ -281,7 +281,6 @@ final class Dotenv
 
             throw $this->createFormatException('Missing = in the environment variable declaration');
         }
-
         if (' ' === $this->data[$this->cursor] || "\t" === $this->data[$this->cursor]) {
             throw $this->createFormatException('Whitespace characters are not supported after the variable name');
         }

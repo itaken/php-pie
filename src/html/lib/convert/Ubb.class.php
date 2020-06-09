@@ -1,6 +1,6 @@
 <?php
 
-namespace ItakenPHPie\html;
+namespace ItakenPHPie\html\lib\convert;
 
 /**
  * Html转换工具
@@ -8,7 +8,7 @@ namespace ItakenPHPie\html;
  * @author itaken<regelhh@gmail.com>
  * @since 2020-05-10
  */
-final class HtmlConvertPie
+final class Ubb
 {
     /**
      * @var array 标签映射
@@ -192,7 +192,7 @@ final class HtmlConvertPie
     * @param string $str
     * @return array
     */
-    public static function htmlTagsGrab($str)
+    private static function htmlTagsGrab($str)
     {
         if (empty($str)) {
             return $str;

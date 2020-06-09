@@ -220,7 +220,6 @@ final class OutputPie
         echo $message;
         $buffer = ob_get_contents();
         ob_end_clean();
-
         return $buffer;
     }
 

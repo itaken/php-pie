@@ -2,9 +2,6 @@
 
 namespace ItakenPHPie\text;
 
-include('lib/calculate/LRS.class.php');
-include('lib/markdown/Parsedown.php');
-
 use ItakenPHPie\text\PinyinPie;
 use ItakenPHPie\config\ConfigPie;
 use ItakenPHPie\http\IpPie;

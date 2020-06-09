@@ -2,8 +2,6 @@
 
 namespace ItakenPHPie\text;
 
-include('lib/sensitive/SensitiveWordFilter.class.php');
-
 use ItakenPHPie\text\StringPie;
 use ItakenPHPie\text\lib\sensitive\SensitiveWordFilter;
 

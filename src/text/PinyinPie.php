@@ -2,8 +2,7 @@
 
 namespace ItakenPHPie\text;
 
-include('lib/chinese/cn2pinyin.class.php');
-
+use ItakenPHPie\text\StringPie;
 use ItakenPHPie\text\lib\chinese\cn2pinyin;
 
 /**

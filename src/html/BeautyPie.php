@@ -8,7 +8,7 @@ namespace ItakenPHPie\html;
  * @author itaken<regelhh@gmail.com>
  * @since 2020-05-10
  */
-final class HtmlBeautyPie
+final class BeautyPie
 {
     /**
      * 美化HTML显示
@@ -65,21 +65,6 @@ final class HtmlBeautyPie
             $space_times ++;  // 空格 +1
         }
         return $beauty_str;
-    }
-
-    /**
-     * 过滤商品介绍里面的js等有碍安全的代码
-     *
-     * @param string $html
-     * @return html
-     */
-    public static function cleanScript(string $html)
-    {
-        if (empty($html) || !is_string($html)) {
-            return $html;
-        }
-        $html = preg_replace('/<script.*<\/script>/isU', '', $html);
-        return $html;
     }
 
     /**

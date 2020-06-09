@@ -2,8 +2,6 @@
 
 namespace ItakenPHPie\other;
 
-include('lib/Distance.class.php');
-
 use ItakenPHPie\other\lib\Distance;
 
 /**

@@ -2,8 +2,6 @@
 
 namespace ItakenPHPie\config;
 
-include('lib/Dotenv.class.php');
-
 use ItakenPHPie\config\lib\Dotenv;
 
 /**

@@ -10,7 +10,11 @@ spl_autoload_register(function ($class) {
     $class = str_replace('\\', '/', $class);
 
     if (strpos($class, 'ItakenPHPie')===0) {
-        $file = __DIR__ . '/' .str_replace('ItakenPHPie', 'src', $class).".php";
+        if (strpos($class, '/lib/') !== false) {
+            $file = __DIR__ . '/' .str_replace('ItakenPHPie', 'src', $class).".class.php";
+        }else{
+            $file = __DIR__ . '/' .str_replace('ItakenPHPie', 'src', $class).".php";
+        }
         if (file_exists($file)) {
             include($file);
         }

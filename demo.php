@@ -28,14 +28,12 @@ if (file_exists($vdFile)) {
 
 // 定义常用变量
 if (!function_exists('dump')) {
-    function dump(...$argv)
-    {
+    function dump(...$argv){
         var_dump(...$argv);
     }
 }
 if (!function_exists('p')) {
-    function p(...$argv)
-    {
+    function p(...$argv){
         dump(...$argv);
     }
 }
@@ -55,21 +53,20 @@ use ItakenPHPie\file\FileDetectPie;
 use ItakenPHPie\browser\TerminalPie;
 use ItakenPHPie\encrypt\HiddenPie;
 use ItakenPHPie\encrypt\lib\IntConvert;
-use ItakenPHPie\encrypt\lib\IntEncode;
 use ItakenPHPie\encrypt\PasswordPie;
 use ItakenPHPie\file\FileThroughPie;
 use ItakenPHPie\file\SectionPie;
 use ItakenPHPie\html\XmlPie;
-use ItakenPHPie\html\HtmlConvertPie;
 use ItakenPHPie\text\FilterPie;
 use ItakenPHPie\html\TagPie;
 use ItakenPHPie\http\ClientPie;
 use ItakenPHPie\other\FormatPie;
 use ItakenPHPie\text\StringPie;
 
-// $res = ConfigPie::get('basic/mimes');
-// $res = FilterPie::sensitiveFilter('测试');
 // $res = TerminalPie::isWap();
+// $res = TerminalPie::isBot();
+// $res = ConfigPie::get('basic/mimes');
+// $res = FilterPie::sensitiveFilter('我只是测试');
 // $res = CharsetPie::toAlphabet('À|Á|Â|Ã|Ä|Å|Ǻ|Ā|Ă|Ą|Ǎ|A|à|á|â|ã');
 // $res = LangPie::toTrad('中华人民共和国');
 // $res = PinyinPie::toPinyin('中华人民共和国');
@@ -97,7 +94,7 @@ use ItakenPHPie\text\StringPie;
 //     <a href="javascript:">链接</a>
 // </div>
 // HTML;
-// $res = HtmlConvertPie::ubbEncode($html);
+// $res = TagPie::html2UBB($html);
 // $res = OutputPie::jsonEcho(['abc' => 111]);
 // $res = OutputPie::jsonOutput(['abc' => 111]);
 // $res = OutputPie::redirect('https://bing.com');
@@ -148,9 +145,10 @@ use ItakenPHPie\text\StringPie;
 // $res = StringPie::mbSubstrReplace('PHP是一种开源的通用计算机脚本语言', '*', 3, 2);
 // $res = TimePie::getMsTimestamp();
 // $res = HiddenPie::phoneHide('13800138000');
+// $res = HiddenPie::nameHide('中国itaken');
 // $res = StringPie::md2html(file_get_contents('README.md'));
 // $res = XmlPie::rssFile2array('rss.xml');
-// $res = SectionPie::removeComments('autoload.php');
+// $res = SectionPie::removeComments('autoload.php', '');
 // echo $en = EncryptPie::xxTeaEncode('中国');
 // $res = EncryptPie::xxTeaDecode($en);
 // $res = StringPie::uniqidString(6);

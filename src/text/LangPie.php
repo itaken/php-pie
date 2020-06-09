@@ -2,8 +2,6 @@
 
 namespace ItakenPHPie\text;
 
-include('lib/chinese/ChineseSTConvert.class.php');
-
 use ItakenPHPie\text\lib\chinese\ChineseSTConvert;
 
 /**

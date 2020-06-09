@@ -4,7 +4,6 @@ namespace ItakenPHPie\file;
 
 /**
  * 输出
- * @doc https://segmentfault.com/a/1190000022515502
  *
  * @modify itaken<regelhh@gmail.com>
  * @since 2020-05-18
@@ -14,6 +13,7 @@ final class StreamPie
 
     /**
      * php 发送流文件
+     * @doc https://segmentfault.com/a/1190000022515502
      *
      * @param  string  $url  接收的路径
      * @param  string  $file 要发送的文件

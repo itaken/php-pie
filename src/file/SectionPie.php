@@ -2,8 +2,6 @@
 
 namespace ItakenPHPie\file;
 
-include('lib/RemoveComments.class.php');
-
 use ItakenPHPie\file\lib\RemoveComments;
 
 /**

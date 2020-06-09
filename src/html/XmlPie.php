@@ -2,8 +2,6 @@
 
 namespace ItakenPHPie\html;
 
-include('lib/xml/Opml.php');
-
 /**
  * XML
  *
@@ -91,6 +89,7 @@ final class XmlPie
 
     /**
      * RSS XML文件 转为数组
+     * @deprecated
      * 
      * @param string $file RSS xml文件
      * @return array
@@ -100,7 +99,7 @@ final class XmlPie
         if(empty($file) || !file_exists($file)){
             return '';
         }
-        return \ItakenPHPie\html\lib\xml\libopml_parse_file($file);
+        // return \ItakenPHPie\html\lib\xml\libopml_parse_file($file);
     }
 
 }

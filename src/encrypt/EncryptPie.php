@@ -2,11 +2,6 @@
 
 namespace ItakenPHPie\encrypt;
 
-include('lib/XXTea.class.php');
-include('lib/IntConvert.class.php');
-include('lib/IntEncode.class.php');
-include('lib/StringEncrypt.class.php');
-
 use ItakenPHPie\encrypt\lib\XXTea;
 use ItakenPHPie\encrypt\lib\IntEncode;
 use ItakenPHPie\encrypt\lib\IntConvert;

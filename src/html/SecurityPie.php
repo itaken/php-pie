@@ -76,6 +76,21 @@ final class SecurityPie
     }
 
     /**
+     * 过滤商品介绍里面的js等有碍安全的代码
+     *
+     * @param string $html
+     * @return html
+     */
+    public static function cleanScript(string $html)
+    {
+        if (empty($html) || !is_string($html)) {
+            return $html;
+        }
+        $html = preg_replace('/<script.*<\/script>/isU', '', $html);
+        return $html;
+    }
+
+    /**
      * PHP标签 转换 实体
      *
      * @param string $str
@@ -98,20 +113,73 @@ final class SecurityPie
     }
 
     /**
-     * 请求判断
-     * 
-     * @param mixed $input
-     * @return mixed
+     * Encoded Mailto Link (from CodeIgniter)
+     *
+     * @param string $email      the email address
+     * @param string $title      the link title
+     * @param mixed  $attributes any attributes
+     *
+     * @return string
      */
-    public static function attackCheck($input)
+    public static function safeMailto(string $email, string $title = '', $attributes = ''): string
     {
-        $inputCheck = is_array($input) ? implode($input) : $input;
-        // post 过滤规则 来自 360safe
-        $postFilter = "\\b(and|or)\\b.{1,6}?(=|>|<|\\bin\\b|\\blike\\b)|\\/\\*.+?\\*\\/|<\\s*script\\b|\\bEXEC\\b|UNION.+?SELECT|UPDATE.+?SET|INSERT\\s+INTO.+?VALUES|(SELECT|DELETE).+?FROM|(CREATE|ALTER|DROP|TRUNCATE)\\s+(TABLE|DATABASE)";
-		if (preg_match("/" . $postFilter . "/is", $inputCheck)) {
-            throw new \InvalidArgumentException('Illegal argument!');
+        if (trim($title) === '') {
+            $title = $email;
         }
-        return $input;
+        $x = str_split('<a href="mailto:', 1);
+        for ($i = 0, $l = strlen($email); $i < $l; $i ++) {
+            $x[] = '|' . ord($email[$i]);
+        }
+        $x[] = '"';
+        if ($attributes !== '') {
+            if (is_array($attributes)) {
+                foreach ($attributes as $key => $val) {
+                    $x[] = ' ' . $key . '="';
+                    for ($i = 0, $l = strlen($val); $i < $l; $i ++) {
+                        $x[] = '|' . ord($val[$i]);
+                    }
+                    $x[] = '"';
+                }
+            } else {
+                for ($i = 0, $l = mb_strlen($attributes); $i < $l; $i ++) {
+                    $x[] = mb_substr($attributes, $i, 1);
+                }
+            }
+        }
+        $x[] = '>';
+        $temp = [];
+        for ($i = 0, $l = strlen($title); $i < $l; $i ++) {
+            $ordinal = ord($title[$i]);
+            if ($ordinal < 128) {
+                $x[] = '|' . $ordinal;
+            } else {
+                if (empty($temp)) {
+                    $count = ($ordinal < 224) ? 2 : 3;
+                }
+                $temp[] = $ordinal;
+                if (count($temp) === $count) {
+                    $number = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
+                    $x[]    = '|' . $number;
+                    $count  = 1;
+                    $temp   = [];
+                }
+            }
+        }
+
+        $x[] = '<';
+        $x[] = '/';
+        $x[] = 'a';
+        $x[] = '>';
+        $x = \array_reverse($x);
+        $output = '<script type="text/javascript">' . 'var l=new Array();';
+        for ($i = 0, $c = count($x); $i < $c; $i ++) {
+            $output .= 'l[' . $i . "] = '" . $x[$i] . "';";
+        }
+        return $output . ('for (var i = l.length-1; i >= 0; i=i-1) {'
+                . "if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");"
+                . 'else document.write(unescape(l[i]));'
+                . '}'
+                . '</script>');
     }
 
 }
