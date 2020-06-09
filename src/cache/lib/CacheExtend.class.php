@@ -4,7 +4,7 @@ namespace ItakenPHPie\cache\lib;
 
 /**
  * 抽象接口
- * 
+ *
  * @author itaken<regelhh@gmail.com>
  * @since 2020-06-09
  */
@@ -22,7 +22,7 @@ abstract class CacheExtend implements CacheInterface
 
     /**
      * 生成缓存key
-     * 
+     *
      * @param string $name
      * @return string
      */
@@ -33,7 +33,7 @@ abstract class CacheExtend implements CacheInterface
 
     /**
      * 写入缓存
-     * 
+     *
      * @param string $name 缓存变量名
      * @param mixed $value  存储数据
      * @param integer $expire  有效时间（秒）
@@ -52,7 +52,7 @@ abstract class CacheExtend implements CacheInterface
 
     /**
      * 读取缓存
-     * 
+     *
      * @param string $name 缓存变量名
      * @return mixed
      */
@@ -66,12 +66,30 @@ abstract class CacheExtend implements CacheInterface
 
     /**
      * 删除缓存
-     * 
+     *
      * @param string $name 缓存变量名
      * @return boolean
      */
     public function delete($name)
     {
         return $this->handler->delete($this->genCacheKey($name));
+    }
+
+    /**
+     * 其他未定义操作(直接操作对象)
+     *
+     * @param string $name 方法
+     * @param mixed $arguments 参数
+     * @return mixed
+     */
+    public function __call($name, $arguments)
+    {
+        if (method_exists($this->handler, $name)) {
+            return call_user_func_array([
+                $this->handler,
+                $name,
+            ], $arguments);
+        }
+        return false;
     }
 }

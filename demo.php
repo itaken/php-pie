@@ -165,6 +165,7 @@ use ItakenPHPie\text\StringPie;
 // echo $res = CachePie::get('ITAKEN');
 // CachePie::delete('ITAKEN');
 // $res = CachePie::get('ITAKEN');
+// $res = CachePie::clear();
 
 
 p($res);
