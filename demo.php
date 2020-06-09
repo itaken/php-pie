@@ -51,6 +51,8 @@ use ItakenPHPie\text\CharsetPie;
 use ItakenPHPie\encrypt\EncryptPie;
 use ItakenPHPie\file\FileDetectPie;
 use ItakenPHPie\browser\TerminalPie;
+use ItakenPHPie\cache\CachePie;
+use ItakenPHPie\cache\lib\Redis;
 use ItakenPHPie\encrypt\HiddenPie;
 use ItakenPHPie\encrypt\lib\IntConvert;
 use ItakenPHPie\encrypt\PasswordPie;
@@ -159,6 +161,10 @@ use ItakenPHPie\text\StringPie;
 // echo $en = EncryptPie::strEncrypt('中国');
 // $res = EncryptPie::strDecrypt($en);
 // echo $res = TagPie::autoLink('GITHUB https://github.com/itaken regelhh@gmail.com');
+// $res = CachePie::set('ITAKEN', '缓存', 60);
+// echo $res = CachePie::get('ITAKEN');
+// CachePie::delete('ITAKEN');
+// $res = CachePie::get('ITAKEN');
 
 
 p($res);
