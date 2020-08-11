@@ -5,44 +5,41 @@
 ## **必须**
 
 - `类与方法`命名规范:  **驼峰命名法**
-- 使用 `PSR-4` 代码规范 
-
-## **可选**
-
-- 可以使用 PHP 7.1 版本的特性
+- 使用 `PSR-4` 代码规范
+- `PHP` >= **7.1.0**
 
 # 目的
 
-- [x] :shipit: 常用的PHP片段
-- [x] 主要方便 **个人** 查看使用
+- [x] :shipit: 常用的PHP代码碎片
+- [x] 方便 **个人** 引用查询使用
 - [x] 代码备份
+- [x] 项目开发
 
 > 更多内容,可以访问[:rocket: ITAKEN GITHUB PAGES](https://itaken.github.io)
 
 # 引入
 
-## TODO::`composer.json`文件中引入
+## `composer.json`文件中引入
 
 ```json
 {
     "require": {
-        "itaken/php-pie": "^1.0.0"
+        "itaken/php-pie": "dev-master"
     },
     "repositories": [
         {
-            "type": "composer",
-            "url": "https://packagist.org"
+            "type": "vcs",
+            "url": "https://github.com/itaken/php-pie.git"
         }
-    ]
+    ],
+    "minimum-stability": "dev"
 }
 ```
 
->仓库地址: 暂无
+然后执行
 
-## TODO::在`命令行`中添加
-
-```bash
-composer require "itaken/php-pie"
+```
+composer update itaken/php-pie
 ```
 
 ## 文件引入

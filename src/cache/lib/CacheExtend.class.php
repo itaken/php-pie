@@ -85,10 +85,7 @@ abstract class CacheExtend implements CacheInterface
     public function __call($name, $arguments)
     {
         if (method_exists($this->handler, $name)) {
-            return call_user_func_array([
-                $this->handler,
-                $name,
-            ], $arguments);
+            return call_user_func_array([$this->handler, $name,], $arguments);
         }
         return false;
     }

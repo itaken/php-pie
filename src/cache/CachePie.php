@@ -93,9 +93,10 @@ final class CachePie
      */
     public static function __callStatic($name, $arguments)
     {
-        return call_user_func_array([
-            self::getInstance(),
-            $name,
-        ], $arguments);
+        $call = self::getInstance();
+        if (method_exists($call, $name)) {
+            return call_user_func_array([$call, $name,], $arguments);
+        }
+        return false;
     }
 }
