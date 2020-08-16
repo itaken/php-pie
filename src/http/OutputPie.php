@@ -10,27 +10,6 @@ namespace ItakenPHPie\http;
  */
 final class OutputPie
 {
-
-    /**
-     * 是否 GET 提交
-     *
-     * @return boolean - true 是
-     */
-    public static function isGet()
-    {
-        return $_SERVER['REQUEST_METHOD'] == 'GET';
-    }
-
-    /**
-     * 是否 POST 提交
-     *
-     * @return boolean - true 是
-     */
-    public static function isPost()
-    {
-        return $_SERVER['REQUEST_METHOD'] == 'POST';
-    }
-
     /**
      * 自定义 json 返回
      *

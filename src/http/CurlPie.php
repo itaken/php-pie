@@ -17,11 +17,6 @@ final class CurlPie
     private static $tTimeOut = 30;
 
     /**
-     * @var string 默认UA
-     */
-    private static $tUseragent = 'CurlPie/1.0 Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2.24) Gecko/20111103 Firefox/3.6.24';
-
-    /**
      * @return array 头部信息
      */
     private static $tResponseHeader = [];
@@ -79,7 +74,7 @@ final class CurlPie
         curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 8);
         curl_setopt($ch, CURLOPT_REFERER, $url);
-        curl_setopt($ch, CURLOPT_USERAGENT, self::$tUseragent);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'CurlPie/1.0 ' . $_SERVER['HTTP_USER_AGENT']);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
@@ -220,7 +215,7 @@ final class CurlPie
             curl_setopt($ch[$i], CURLOPT_REFERER, $url);
             curl_setopt($ch[$i], CURLOPT_TIMEOUT, $timeout); //超时
             curl_setopt($ch[$i], CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch[$i], CURLOPT_USERAGENT, self::$tUseragent);
+            curl_setopt($ch[$i], CURLOPT_USERAGENT, 'CurlPie/1.0 ' . $_SERVER['HTTP_USER_AGENT']);
             curl_setopt($ch[$i], CURLOPT_HEADER, 0);
             curl_setopt($ch[$i], CURLOPT_NOSIGNAL, true);
             curl_setopt($ch[$i], CURLOPT_ENCODING, 'gzip, deflate');
@@ -288,7 +283,7 @@ final class CurlPie
             curl_setopt($ch[$i], CURLOPT_TIMEOUT, $timeout);
             curl_setopt($ch[$i], CURLOPT_CONNECTTIMEOUT, 8);
             curl_setopt($ch[$i], CURLOPT_REFERER, $url);
-            curl_setopt($ch[$i], CURLOPT_USERAGENT, self::$tUseragent);
+            curl_setopt($ch[$i], CURLOPT_USERAGENT, 'CurlPie/1.0 ' . $_SERVER['HTTP_USER_AGENT']);
             curl_setopt($ch[$i], CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch[$i], CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch[$i], CURLOPT_SSL_VERIFYHOST, false);

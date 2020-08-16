@@ -64,8 +64,10 @@ final class ConfigPie
         static $tEnv = null;
         if (is_null($tEnv)) {
             $envFile = $envFile ?: dirname(dirname(__DIR__)) .'/.env';
-            (new Dotenv())->loadEnv($envFile);
-            $tEnv = $_ENV;
+            if(file_exists($envFile)){
+                (new Dotenv())->loadEnv($envFile);
+            }
+            $tEnv = $_ENV ?: \getenv();
         }
         if (is_null($name) || $name === '' || $name === false) {
             return $tEnv;

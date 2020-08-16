@@ -105,7 +105,7 @@ final class Dotenv
     {
         $k = $envKey ?? $this->envKey;
 
-        if (is_file($path) || !is_file($p = "$path.dist")) {
+        if (is_file($path) || !is_file($p = "$path.prod")) {
             $this->load($path);
         } else {
             $this->load($p);

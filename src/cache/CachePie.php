@@ -24,8 +24,8 @@ final class CachePie
         if (!isset($iCacheInstance[$type])) {
             $cacheType = $type;
             if (empty($type)) {
-                $config = ConfigPie::loadEnv(null);
-                $cacheType = ucfirst($config['CACHE_TYPE']) ?: '';
+                $cacheTypeName = ConfigPie::loadEnv('CACHE_TYPE', 'redis');
+                $cacheType = ucfirst($cacheTypeName) ?: '';
             }
             $class = __NAMESPACE__ . '\\lib\\' . $cacheType;
             if (!class_exists($class)) {
