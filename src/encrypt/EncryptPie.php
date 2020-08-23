@@ -68,7 +68,7 @@ final class EncryptPie
 
     /**
      * 可逆的字符串加密函数 (可变)
-     * 
+     *
      * @param int $txtStream 待加密的字符串内容
      * @param int $password 加密密码
      * @return string 加密后的字符串
@@ -80,7 +80,7 @@ final class EncryptPie
 
     /**
      * 可逆的字符串解密函数
-     * 
+     *
      * @param int $txtStream 待加密的字符串内容
      * @param int $password 解密密码
      * @return string 解密后的字符串
@@ -109,7 +109,7 @@ final class EncryptPie
             }
         }
         return rtrim(strtr(base64_encode($string), '+/', '-_'), '=');
-        //	return base64_encode($string);
+        // return base64_encode($string);
     }
 
     /**
@@ -122,7 +122,7 @@ final class EncryptPie
     public static function xorDecrypt($string, $key=self::ITAKEN_KEY)
     {
         $string = base64_decode(str_pad(strtr($string, '-_', '+/'), strlen($string) % 4, '=', STR_PAD_RIGHT));
-        //	$string = base64_decode(trim($string));
+        // $string = base64_decode(trim($string));
         if (empty($string)) {
             return false;
         }
@@ -272,5 +272,66 @@ final class EncryptPie
     public static function intDecode($string)
     {
         return IntEncode::decode($string);
+    }
+
+    /**
+     * 加密hash，生成发送给用户的hash字符串
+     *
+     * @param array $hashArr
+     * @param string $hashKey 加密干扰码
+     * @return string
+     */
+    public static function encodeHash($hashArr, string $hashKey=self::ITAKEN_KEY)
+    {
+        if (empty($hashArr)) {
+            return false;
+        }
+        $hashStr = "";
+        foreach ($hashArr as $key=>$value) {
+            $hashStr .= $key . "^]+" . $value . "!;-";
+        }
+        $hashStr = substr($hashStr, 0, -3);
+        $tmpStr = '';
+        for ($i=1; $i<=strlen($hashStr); $i++) {
+            $char   = substr($hashStr, $i-1, 1);
+            $keyChar = substr($hashKey, ($i % strlen($hashKey))-2, 1);
+            $char   = chr(ord($char)+ord($keyChar));
+            $tmpStr .= $char;
+        }
+        return str_replace(['+','/','='], ['-','_','.'], base64_encode($tmpStr));
+    }
+
+    /**
+     * 解密hash，从用户回链的hash字符串解密出里面的内容
+     *
+     * @param string $hashStr
+     * @param string $hashKey 加密干扰码
+     * @return array
+     */
+    public static function decodeHash($hashStr, string $hashKey=self::ITAKEN_KEY)
+    {
+        if (empty($hashStr)) {
+            return [];
+        }
+        $tmpStr  = '';
+        if (strpos($hashStr, "-")||strpos($hashStr, "_")||strpos($hashStr, ".")) {
+            $hashStr = str_replace(['-','_','.'], ['+','/','='], $hashStr);
+        }
+        $hashStr = base64_decode($hashStr);
+        for ($i=1; $i<=strlen($hashStr); $i++) {
+            $char   = substr($hashStr, $i-1, 1);
+            $keyChar = substr($hashKey, ($i % strlen($hashKey))-2, 1);
+            $char  = chr(ord($char)-ord($keyChar));
+            $tmpStr .= $char;
+        }
+        $hashArr = [];
+        $arr = explode("!;-", $tmpStr);
+        foreach ($arr as $value) {
+            list($k, $v) = explode("^]+", $value);
+            if ($k) {
+                $hashArr[$k] = $v;
+            }
+        }
+        return $hashArr;
     }
 }
