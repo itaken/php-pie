@@ -169,6 +169,7 @@ use ItakenPHPie\text\StringPie;
 // $res = CachePie::clear();
 // $res = RandPie::randomStatic(10,100);
 // $res = RandPie::randomText(6, 0);
+// $res = StringPie::digitalConversion(3450780);
 
 
 

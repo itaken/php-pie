@@ -253,4 +253,30 @@ final class StringPie
         return strtolower($uniqid);
     }
 
+    /**
+     * 阿拉伯数字小写转大写 只支持两位
+     *
+     * @param int $number
+     * @return string
+     */
+    public static function digitalConversion(int $number): string
+    {
+        $zhText = $number < 0 ? '负' : '';
+        $number = str_replace('-', '', strval($number));
+        $zhMap = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
+        $numMap = [2=>'拾',3=>'佰',4=>'仟',5=>'万',6=>'拾',7=>'佰',8=>'仟',9=>'亿',10=>'拾',11=>'佰',12=>'仟',13=>'万' ];
+        $num = $zhNum = strlen($number);
+        for ($i = 0; $i < $num; $i ++) {
+            $char = $number[$i];
+            $zh = $zhMap[$char];  // 中文数字
+            $numZh = $numMap[$zhNum];  // 进位
+            if ('零' == $zh && in_array($numZh, ['拾', '佰', '仟'])) {
+                $numZh = '';
+            }
+            $zhText .= $zh . $numZh;
+
+            $zhNum --;
+        }
+        return str_replace(['拾零', '零拾', '零零'], ['拾', '拾', '零'], $zhText);
+    }
 }
