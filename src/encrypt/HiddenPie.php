@@ -18,7 +18,8 @@ final class HiddenPie
      */
     public static function phoneHide($mobile)
     {
-        return substr_replace($mobile, '*****', 3, 5);
+        return substr($mobile, 0, 3) . '*****' . substr($mobile, -3);
+        // return substr_replace($mobile, '*****', 3, 5);
     }
 
     /**
@@ -30,7 +31,8 @@ final class HiddenPie
     public static function nameHide($name)
     {
         if (preg_match('#[a-zA-Z]#', $name)) {
-            $name = mb_substr($name, 0, 3, 'UTF-8') . '****';
+            // $name = mb_substr($name, 0, 3, 'UTF-8') . '****';
+            $name = substr($name, 0, 1) . '**' . substr($name, -1);
         } else {
             $name = mb_substr($name, 0, 1, 'UTF-8') . '**';
         }
@@ -48,4 +50,5 @@ final class HiddenPie
         $emailArr = explode('@', $email);
         return substr($emailArr[0], 0, 2) . '***@' . $emailArr[1];
     }
+
 }

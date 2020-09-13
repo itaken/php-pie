@@ -63,6 +63,7 @@ use ItakenPHPie\text\FilterPie;
 use ItakenPHPie\html\TagPie;
 use ItakenPHPie\http\ClientPie;
 use ItakenPHPie\other\FormatPie;
+use ItakenPHPie\text\RandPie;
 use ItakenPHPie\text\StringPie;
 
 // $res = TerminalPie::isWap();
@@ -166,6 +167,9 @@ use ItakenPHPie\text\StringPie;
 // CachePie::delete('ITAKEN');
 // $res = CachePie::get('ITAKEN');
 // $res = CachePie::clear();
+// $res = RandPie::randomStatic(10,100);
+// $res = RandPie::randomText(6, 0);
+
 
 
 p($res);
